@@ -12,6 +12,10 @@ buildscript {
 	}
 }
 
+plugins {
+	id 'org.springframework.boot' version '2.0.4.RELEASE'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -36,8 +40,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-webflux')
 	compile('org.springframework.cloud:spring-cloud-starter')
-//	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
-//	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
+	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+	compile('org.springframework.cloud:spring-cloud-starter-openfeign')
 	compile('org.springframework.cloud:spring-cloud-stream-binder-kafka')
 	compile('org.springframework.cloud:spring-cloud-stream-reactive')
 	compile('org.springframework.kafka:spring-kafka')
