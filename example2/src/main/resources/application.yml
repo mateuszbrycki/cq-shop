@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        events-in:
+          destination: events
+          contentType: application/json
+        events-out:
+          destination: events
+          contentType: application/json
