@@ -1,0 +1,31 @@
+server:
+  address: localhost
+  port: 8081
+
+logging:
+  file: ${spring.application.name}.log
+  path: ../
+  level:
+      org:
+        springframework:
+          web: ERROR
+        hibernate: DEBUG
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${CONF_EUREKA_HOST:127.0.0.1}:${CONF_EUREKA_PORT:8761}/eureka
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        events-in:
+          destination: events
+          contentType: application/json
+        events-out:
+          destination: events
+          contentType: application/json
