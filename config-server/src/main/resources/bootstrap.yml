@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/mateuszbrycki/cq-shop-config.git
+
+server:
+  port: 8888
+
+logging:
+  file: ${spring.application.name}.log
+  path: ../
