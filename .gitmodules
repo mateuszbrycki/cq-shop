@@ -1,0 +1,3 @@
+[submodule "cq-shop-config"]
+	path = cq-shop-config
+	url = https://github.com/mateuszbrycki/cq-shop-config
