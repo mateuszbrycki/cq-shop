@@ -1,0 +1,6 @@
+apply plugin: 'java'
+
+group = 'com.cqshop'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
