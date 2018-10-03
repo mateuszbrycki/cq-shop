@@ -20,7 +20,4 @@ echo "------------------------ STARTING EUREKA SERVER --------------------------
 screen -d -m -S "eureka-server" bash -c "cd eureka-server; ./startup.sh";
 
 echo "------------------------ STARTING EXAMPLE1 ----------------------------------"
-screen -d -m -S "example1" bash -c "cd example1; ./startup.sh";
-
-echo "------------------------ STARTING EXAMPLE2 ----------------------------------"
-screen -d -m -S "example2" bash -c "cd example2; ./startup.sh";
+screen -d -m -S "user-management-service" bash -c "cd user-management-service; ./startup.sh";

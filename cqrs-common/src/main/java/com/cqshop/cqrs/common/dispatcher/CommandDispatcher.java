@@ -7,5 +7,5 @@ import com.cqshop.cqrs.common.command.AbstractApplicationCommand;
  */
 public interface CommandDispatcher {
 
-    void dispatch(AbstractApplicationCommand command);
+    Object dispatch(AbstractApplicationCommand command);
 }
