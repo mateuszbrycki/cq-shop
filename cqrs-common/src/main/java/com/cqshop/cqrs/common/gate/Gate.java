@@ -1,11 +1,12 @@
-package com.cqshop.cqrs.common.dispatcher;
+package com.cqshop.cqrs.common.gate;
 
 import com.cqshop.cqrs.common.command.AbstractApplicationCommand;
 
 /**
  * Created by Mateusz Brycki on 02/10/2018.
  */
-public interface CommandDispatcher {
+public interface Gate {
 
+    //TODO mbrycki dispatchAsync
     Object dispatch(AbstractApplicationCommand command);
 }

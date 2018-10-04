@@ -17,6 +17,7 @@ public class EventsListener {
 
     @StreamListener(EventsStreams.INPUT)
     public void handleEvent(@Payload UserCreatedEvent event) {
-        logger.error("EVENT:" + event.toString());
+
+        logger.info("Received: " + event.toString());
     }
 }

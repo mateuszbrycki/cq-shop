@@ -22,7 +22,7 @@ public class CommandHandlerProvider implements ApplicationListener<ContextRefres
 
 
     private final ConfigurableListableBeanFactory beanFactory;
-    private final Map<Class<?>, String> handlers = new HashMap<Class<?>, String>();
+    private final Map<String, String> handlers = new HashMap<String, String>();
 
     public CommandHandlerProvider(ConfigurableListableBeanFactory beanFactory) {
         this.beanFactory = beanFactory;
@@ -30,7 +30,7 @@ public class CommandHandlerProvider implements ApplicationListener<ContextRefres
 
     public CommandHandler findHandler(ApplicationCommand command) {
 
-        String beanName = handlers.get(command.getClass());
+        String beanName = handlers.get(command.getClass().toString());
         if (beanName == null) {
             throw new RuntimeException("command handler not found. Command class is " + command.getClass());
         }
@@ -51,7 +51,7 @@ public class CommandHandlerProvider implements ApplicationListener<ContextRefres
 
             try {
                 Class<?> handlerClass = Class.forName(commandHandler.getBeanClassName());
-                handlers.put(getHandledCommandType(handlerClass), beanName);
+                handlers.put(getHandledCommandType(handlerClass).toString(), beanName);
                 logger.info("Registered " + handlerClass + " command handler");
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);

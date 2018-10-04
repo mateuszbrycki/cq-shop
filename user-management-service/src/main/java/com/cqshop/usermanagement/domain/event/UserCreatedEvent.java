@@ -17,5 +17,6 @@ import java.time.Instant;
 @Builder
 public class UserCreatedEvent extends Event {
 
+    @NonNull
     private Long userId;
 }

@@ -1,7 +1,7 @@
 package com.cqshop.usermanagement.config;
 
-import com.cqshop.cqrs.common.dispatcher.CommandDispatcher;
-import com.cqshop.cqrs.common.dispatcher.SpringCommandDispatcher;
+import com.cqshop.cqrs.common.gate.Gate;
+import com.cqshop.cqrs.common.gate.SpringGate;
 import com.cqshop.cqrs.common.handler.CommandHandlerProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -23,7 +23,7 @@ public class CommandDispatcherConfig {
     }
 
     @Bean
-    public CommandDispatcher commandDispatcher() {
-        return new SpringCommandDispatcher(commandHandlerProvider());
+    public Gate commandDispatcher() {
+        return new SpringGate(commandHandlerProvider());
     }
 }

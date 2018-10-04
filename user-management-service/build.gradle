@@ -38,13 +38,16 @@ ext {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
-	compile('org.springframework.boot:spring-boot-starter-webflux')
+	compile('org.springframework.boot:spring-boot-starter-web')
+//	compile('org.springframework.boot:spring-boot-starter-webflux')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile("org.springframework.boot:spring-boot-devtools")
+
 	compile('org.springframework.cloud:spring-cloud-starter')
 	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
     compile('org.springframework.cloud:spring-cloud-starter-openfeign')
 	compile('org.springframework.cloud:spring-cloud-stream-binder-kafka')
-	compile('org.springframework.cloud:spring-cloud-stream-reactive')
+//	compile('org.springframework.cloud:spring-cloud-stream-reactive')
 	compile('org.springframework.cloud:spring-cloud-starter-config')
 	compile('com.h2database:h2')
 
@@ -53,6 +56,10 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('io.projectreactor:reactor-test')
 	testCompile('org.springframework.cloud:spring-cloud-stream-test-support')
+
+	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+
 
 	compile fileTree("../cqrs-common")
 }
