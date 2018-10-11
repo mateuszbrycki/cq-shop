@@ -1,6 +1,6 @@
-package com.cqshop.usermanagement.controller;
+package com.cqshop.web;
 
-import com.cqshop.usermanagement.domain.validation.ValidationException;
+import com.cqshop.cqrs.common.validation.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

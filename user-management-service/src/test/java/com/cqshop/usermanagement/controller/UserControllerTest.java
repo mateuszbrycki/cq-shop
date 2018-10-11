@@ -1,7 +1,8 @@
 package com.cqshop.usermanagement.controller;
 
+import com.cqshop.cqrs.common.validation.ValidationException;
 import com.cqshop.usermanagement.application.command.RegisterAccountCommand;
-import com.cqshop.usermanagement.domain.validation.ValidationException;
+import com.cqshop.web.ExceptionResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;

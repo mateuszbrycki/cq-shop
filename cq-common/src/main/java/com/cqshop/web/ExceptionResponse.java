@@ -1,4 +1,4 @@
-package com.cqshop.usermanagement.controller;
+package com.cqshop.web;
 
 /**
  * Created by Mateusz Brycki on 11/10/2018.

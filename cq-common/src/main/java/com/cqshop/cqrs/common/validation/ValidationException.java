@@ -1,4 +1,4 @@
-package com.cqshop.usermanagement.domain.validation;
+package com.cqshop.cqrs.common.validation;
 
 /**
  * Created by Mateusz Brycki on 11/10/2018.

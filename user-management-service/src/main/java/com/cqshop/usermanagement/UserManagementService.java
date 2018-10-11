@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableFeignClients
+@ComponentScan(basePackages = {"com.cqshop.web", "com.cqshop.usermanagement"})
 public class UserManagementService {
 
 	public static void main(String[] args) {
