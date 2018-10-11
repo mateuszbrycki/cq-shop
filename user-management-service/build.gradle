@@ -61,7 +61,7 @@ dependencies {
 	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
 
 
-	compile fileTree("../cqrs-common")
+	compile fileTree("../cq-common")
 }
 
 dependencyManagement {

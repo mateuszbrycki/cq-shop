@@ -2,10 +2,10 @@ package com.cqshop.usermanagement.application.handler;
 
 import com.cqshop.cqrs.common.handler.CommandHandler;
 import com.cqshop.cqrs.common.handler.CommandHandlerAnnotation;
+import com.cqshop.cqrs.common.validation.ValidationException;
 import com.cqshop.usermanagement.application.command.RegisterAccountCommand;
 import com.cqshop.usermanagement.domain.User;
 import com.cqshop.usermanagement.domain.service.UserService;
-import com.cqshop.usermanagement.domain.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
