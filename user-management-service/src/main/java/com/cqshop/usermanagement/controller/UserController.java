@@ -2,10 +2,9 @@ package com.cqshop.usermanagement.controller;
 
 import com.cqshop.cqrs.common.gate.Gate;
 import com.cqshop.usermanagement.application.command.RegisterAccountCommand;
-import com.cqshop.usermanagement.domain.User;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping
-    public HttpStatus createUser(RegisterAccountCommand command) {
+    public HttpStatus createUser(@RequestBody RegisterAccountCommand command) {
         Object result = gate.dispatch(command);
 
         return HttpStatus.CREATED;

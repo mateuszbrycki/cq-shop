@@ -3,6 +3,7 @@ package com.cqshop.usermanagement.domain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import javax.persistence.Id;
  * where it should be saved?
  *
  */
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
@@ -31,6 +33,7 @@ public class User {
 
     private String username;
     private String password;
+    private String email;
 
     @Builder.Default
     private Status status = Status.ACTIVATED;

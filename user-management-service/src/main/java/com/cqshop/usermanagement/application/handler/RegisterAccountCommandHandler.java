@@ -5,6 +5,7 @@ import com.cqshop.cqrs.common.handler.CommandHandlerAnnotation;
 import com.cqshop.usermanagement.application.command.RegisterAccountCommand;
 import com.cqshop.usermanagement.domain.User;
 import com.cqshop.usermanagement.domain.service.UserService;
+import com.cqshop.usermanagement.domain.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,24 +17,44 @@ public class RegisterAccountCommandHandler implements CommandHandler<RegisterAcc
 
     private static final Logger logger = LoggerFactory.getLogger(RegisterAccountCommandHandler.class);
 
-    private final UserService repository;
+    private final UserService service;
 
-    public RegisterAccountCommandHandler(UserService repository) {
-        this.repository = repository;
+    public RegisterAccountCommandHandler(UserService service) {
+        this.service = service;
     }
 
     @Override
     public User handle(RegisterAccountCommand registerAccountCommand) {
 
-        User user = User.builder()
-                .username(registerAccountCommand.getUsername())
-                .password(registerAccountCommand.getPassword())
-                .build();
-
-        repository.save(user);
-
         logger.info("Received registerAccountCommand: " + registerAccountCommand);
 
+        String password = registerAccountCommand.getPassword();
+        String username = registerAccountCommand.getUsername();
+        String email = registerAccountCommand.getEmail();
+
+        //TODO mbrycki find better way of validation
+        if (isNullOrEmpty(password)
+                || isNullOrEmpty(username)
+                || isNullOrEmpty(email)) {
+            throw new ValidationException("Password, username and email cannot be empty");
+        }
+
+        if (service.findByEmail(email) != null) {
+            throw new ValidationException("User with " + email + " already exists.");
+        }
+
+        User user = User.builder()
+                .username(username)
+                .password(password)
+                .email(email)
+                .build();
+
+        service.save(user);
+
         return user;
+    }
+
+    private boolean isNullOrEmpty(String value) {
+        return value == null || value.isEmpty();
     }
 }

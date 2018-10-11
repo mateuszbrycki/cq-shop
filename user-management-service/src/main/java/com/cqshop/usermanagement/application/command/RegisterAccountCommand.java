@@ -17,6 +17,12 @@ import java.io.Serializable;
 @ApplicationCommandAnnotation
 public class RegisterAccountCommand extends AbstractApplicationCommand implements Serializable {
 
+    @NonNull
     private String username;
+
+    @NonNull
     private String password;
+
+    @NonNull
+    private String email;
 }
