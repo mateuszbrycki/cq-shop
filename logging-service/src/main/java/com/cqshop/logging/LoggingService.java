@@ -1,4 +1,4 @@
-package com.cqshop.usermanagement;
+package com.cqshop.logging;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,9 +11,9 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableEurekaClient
 @EnableFeignClients
 @ComponentScan(basePackages = {"com.cqshop"})
-public class UserManagementService {
+public class LoggingService {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserManagementService.class, args);
+		SpringApplication.run(LoggingService.class, args);
 	}
 }
