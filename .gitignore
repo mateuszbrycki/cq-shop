@@ -2,3 +2,4 @@ kafka/*
 *.zip
 *.tgz
 *.gz
+*.tmp

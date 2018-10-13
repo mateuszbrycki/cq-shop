@@ -19,5 +19,9 @@ screen -d -m -S "config-server" bash -c "cd config-server; ./startup.sh";
 echo "------------------------ STARTING EUREKA SERVER -----------------------------"
 screen -d -m -S "eureka-server" bash -c "cd eureka-server; ./startup.sh";
 
-echo "------------------------ STARTING EXAMPLE1 ----------------------------------"
-screen -d -m -S "user-management-service" bash -c "cd user-management-service; ./startup.sh";
+echo "------------------------ STARTING USER MANAGEMENT SERVICE  ------------------"
+#screen -d -m -S "user-management-service" bash -c "cd user-management-service; ./startup.sh";
+
+echo "------------------------ STARTING LOGGINH SERVICE  --------------------------"
+#screen -d -m -S "logging-service" bash -c "cd logging-service; ./startup.sh";
+

@@ -24,15 +24,14 @@ import org.springframework.util.MimeTypeUtils;
 @Component
 public class EventPublisher {
 
-    @Qualifier("userManagementKafkaTemplate")
-    private final KafkaTemplate<String, Event> template;
-
-    @Value("${user-management-service.topic}")
-    private String userManagementOutTopic;
+    private final EventsStreams eventsStreams;
 
     public void publish(Event event) {
+        MessageChannel messageChannel = eventsStreams.outboundEvents();
 
-        template.send(userManagementOutTopic, event);
-        log.info("Event sent " + event);
+        messageChannel.send(MessageBuilder
+                .withPayload(event)
+                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
+                .build());
     }
 }
