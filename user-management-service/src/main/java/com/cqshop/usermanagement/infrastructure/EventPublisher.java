@@ -1,6 +1,7 @@
 package com.cqshop.usermanagement.infrastructure;
 
 import com.cqshop.avro.AvroMessageBuilder;
+import com.cqshop.usermanagement.domain.event.UserCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.MessageChannel;
@@ -21,10 +22,10 @@ public class EventPublisher {
     public void publish(Event event) {
         MessageChannel messageChannel = eventsStreams.outboundEvents();
 
-        /*com.cqshop.usermanagement.avro.UserCreatedEvent userCreatedEvent = new com.cqshop.usermanagement.avro.UserCreatedEvent();
+        com.cqshop.usermanagement.avro.UserCreatedEvent userCreatedEvent = new com.cqshop.usermanagement.avro.UserCreatedEvent();
         userCreatedEvent.setTimestamp(System.currentTimeMillis());
         userCreatedEvent.setUserId(((UserCreatedEvent)event).getUserId());
 
-        messageChannel.send(messageBuilder.buildMessage(userCreatedEvent));*/
+        messageChannel.send(messageBuilder.buildMessage(userCreatedEvent));
     }
 }

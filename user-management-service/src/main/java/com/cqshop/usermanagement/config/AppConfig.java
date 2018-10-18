@@ -20,7 +20,7 @@ public class AppConfig
     @Bean
     public MessageConverter messageConverter() throws IOException {
         AvroSchemaMessageConverter converter = new AvroSchemaMessageConverter(MimeType.valueOf(AvroMimeType.AVRO_MIME_TYPE));
-        ClassPathResource schemaLocation = new ClassPathResource("avro/userManagementEvents.avsc");
+        ClassPathResource schemaLocation = new ClassPathResource("schemas/userManagementEvents.avsc");
         converter.setSchemaLocation(schemaLocation);
         return converter;
     }
