@@ -1,25 +1,29 @@
 buildscript {
 	ext {
-		springBootVersion = '2.1.0.M2'
+		springBootVersion = '2.0.6.RELEASE'
 	}
 	repositories {
 		mavenCentral()
 		maven { url "https://repo.spring.io/snapshot" }
 		maven { url "https://repo.spring.io/milestone" }
+        maven { url "http://packages.confluent.io/maven/" }
+        jcenter()
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+        classpath "com.commercehub.gradle.plugin:gradle-avro-plugin:0.15.1"
+    }
 }
 
 plugins {
-	id 'org.springframework.boot' version '2.0.4.RELEASE'
+	id 'org.springframework.boot' version '2.0.6.RELEASE'
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "com.commercehub.gradle.plugin.avro"
 
 group = 'com.cqshop'
 version = '0.0.1-SNAPSHOT'
@@ -29,36 +33,46 @@ repositories {
 	mavenCentral()
 	maven { url "https://repo.spring.io/snapshot" }
 	maven { url "https://repo.spring.io/milestone" }
+	maven { url "http://packages.confluent.io/maven/" }
 }
 
 
 ext {
-	springCloudVersion = 'Greenwich.BUILD-SNAPSHOT'
+	springCloudVersion = 'Finchley.RELEASE'
 }
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-web')
-//	compile('org.springframework.boot:spring-boot-starter-webflux')
+	compile('org.springframework.boot:spring-boot-starter-webflux')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile("org.springframework.boot:spring-boot-devtools")
+	compile('org.springframework.boot:spring-boot-starter-integration')
+	compile('org.springframework.boot:spring-boot-starter-logging')
 
 	compile('org.springframework.cloud:spring-cloud-starter')
 	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
-    compile('org.springframework.cloud:spring-cloud-starter-openfeign')
-	compile('org.springframework.cloud:spring-cloud-stream-binder-kafka')
-//	compile('org.springframework.cloud:spring-cloud-stream-reactive')
+	compile('org.springframework.cloud:spring-cloud-starter-openfeign')
 	compile('org.springframework.cloud:spring-cloud-starter-config')
+	compile('org.springframework.cloud:spring-cloud-stream-schema')
+
+	compile('org.springframework.kafka:spring-kafka')
+//	compile("org.springframework.boot:spring-boot-devtools")
+
+	compile('org.apache.avro:avro:1.8.2')
 	compile('com.h2database:h2')
+	compile('javax.xml.bind:jaxb-api:2.3.0')
+	compile('org.apache.avro:avro:1.8.2')
+	compile('io.confluent:kafka-avro-serializer:3.3.1') {
+		exclude module: "logback-classic"
+		exclude module: "jcl-over-slf4j"
+	}
+
 
 	compileOnly('org.projectlombok:lombok')
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('io.projectreactor:reactor-test')
 	testCompile('org.springframework.cloud:spring-cloud-stream-test-support')
-
-	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
-	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
-
+	testCompile('io.projectreactor:reactor-test')
 
 	compile fileTree("../cq-common")
 }
