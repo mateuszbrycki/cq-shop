@@ -13,15 +13,19 @@ screen -d -m -S "zookeeper-server" bash -c "kafka/bin/zookeeper-server-start.sh 
 echo "------------------------ STARTING KAFKA SERVER ------------------------------"
 screen -d -m -S "kafka-server" bash -c "kafka/bin/kafka-server-start.sh kafka/config/server.properties";
 
+echo "------------------------ STARTING SCHEMA REGISTRY SERVER --------------------"
+screen -d -m -S "schema-registry-server" bash -c "confluent/bin/schema-registry-start ./confluent/etc/schema-registry/schema-registry.properties";
+
 echo "------------------------ STARTING CONFIG SERVER -----------------------------"
 screen -d -m -S "config-server" bash -c "cd config-server; ./startup.sh";
 
 echo "------------------------ STARTING EUREKA SERVER -----------------------------"
 screen -d -m -S "eureka-server" bash -c "cd eureka-server; ./startup.sh";
 
-echo "------------------------ STARTING USER MANAGEMENT SERVICE  ------------------"
+#echo "------------------------ STARTING USER MANAGEMENT SERVICE  ------------------"
 #screen -d -m -S "user-management-service" bash -c "cd user-management-service; ./startup.sh";
 
-echo "------------------------ STARTING LOGGINH SERVICE  --------------------------"
+#echo "------------------------ STARTING LOGGING SERVICE  --------------------------"
 #screen -d -m -S "logging-service" bash -c "cd logging-service; ./startup.sh";
 
+#bin/schema-registry-start ./etc/schema-registry/schema-registry.properties

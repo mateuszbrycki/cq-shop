@@ -1,8 +1,8 @@
 package com.cqshop.kafka;
 
 import com.cqshop.cqrs.common.command.ApplicationCommand;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
  */
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
 public class ApplicationCommandPublisher {
 
@@ -20,6 +19,10 @@ public class ApplicationCommandPublisher {
 
     @Value("${cq-common.application-command-topic}")
     private String applicationCommandTopic;
+
+    public ApplicationCommandPublisher(@Qualifier("cq-common-kafka-template") KafkaTemplate<String, ApplicationCommand> template) {
+        this.template = template;
+    }
 
     public void publish(ApplicationCommand command) {
 

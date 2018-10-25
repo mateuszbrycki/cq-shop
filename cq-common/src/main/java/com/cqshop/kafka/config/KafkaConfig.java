@@ -72,7 +72,7 @@ public class KafkaConfig {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
-    @Bean
+    @Bean("cq-common-kafka-template")
     public KafkaTemplate<String, ApplicationCommand> kafkaTemplate() {
         return new KafkaTemplate<String, ApplicationCommand>(producerFactory());
     }

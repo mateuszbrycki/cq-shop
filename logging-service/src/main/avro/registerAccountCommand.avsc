@@ -1,5 +1,5 @@
 {
-    "namespace": "com.cqshop.usermanagement.application.command",
+    "namespace": "com.cqshop.usermanagement.avro.application.command",
     "type": "record",
     "name": "RegisterAccountCommand",
     "fields": [
