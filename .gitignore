@@ -3,3 +3,6 @@ kafka/*
 *.tgz
 *.gz
 *.tmp
+*/dest/*
+confluent/*
+spring.log*
