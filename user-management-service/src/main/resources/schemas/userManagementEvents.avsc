@@ -1,0 +1,20 @@
+{
+    "namespace": "com.cqshop.usermanagement.avro",
+    "type": "record",
+    "name": "UserCreatedEvent",
+    "fields": [
+        {"name": "userId", "type": "long"},
+        {"name": "timestamp",  "type": "long"}
+    ]
+}
+
+{
+    "namespace": "com.cqshop.usermanagement.application.command",
+    "type": "record",
+    "name": "RegisterAccountCommand",
+    "fields": [
+        {"name": "username", "type": "string"},
+        {"name": "password",  "type": "string"}
+        {"name": "email",  "type": "string"}
+    ]
+}

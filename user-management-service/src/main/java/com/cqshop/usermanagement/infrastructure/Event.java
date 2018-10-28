@@ -13,5 +13,5 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class Event {
-    private Long timestamp = Instant.now().toEpochMilli();
+    protected Long timestamp = Instant.now().toEpochMilli();
 }

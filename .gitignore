@@ -2,3 +2,7 @@ kafka/*
 *.zip
 *.tgz
 *.gz
+*.tmp
+*/dest/*
+confluent/*
+spring.log*

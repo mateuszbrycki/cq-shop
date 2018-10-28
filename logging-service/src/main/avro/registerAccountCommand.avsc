@@ -1,0 +1,10 @@
+{
+    "namespace": "com.cqshop.usermanagement.application.command",
+    "type": "record",
+    "name": "RegisterAccountCommand",
+    "fields": [
+        {"name": "username", "type": "string"},
+        {"name": "password",  "type": "string"},
+        {"name": "email",  "type": "string"}
+    ]
+}

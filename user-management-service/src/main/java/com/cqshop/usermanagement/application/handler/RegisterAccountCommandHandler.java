@@ -39,7 +39,7 @@ public class RegisterAccountCommandHandler implements CommandHandler<RegisterAcc
             throw new ValidationException("Password, username and email cannot be empty");
         }
 
-        if (service.findByEmail(email) != null) {
+        if (isUnique(email)) {
             throw new ValidationException("User with " + email + " already exists.");
         }
 
@@ -52,6 +52,10 @@ public class RegisterAccountCommandHandler implements CommandHandler<RegisterAcc
         service.save(user);
 
         return user;
+    }
+
+    private boolean isUnique(String email) {
+        return service.findByEmail(email) != null;
     }
 
     private boolean isNullOrEmpty(String value) {

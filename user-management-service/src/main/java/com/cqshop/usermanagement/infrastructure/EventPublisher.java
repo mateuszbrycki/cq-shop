@@ -1,30 +1,31 @@
 package com.cqshop.usermanagement.infrastructure;
 
+import com.cqshop.avro.AvroMessageBuilder;
 import com.cqshop.usermanagement.domain.event.UserCreatedEvent;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MimeTypeUtils;
 
 /**
  * Created by Mateusz Brycki on 01/10/2018.
  */
+@Slf4j
+@RequiredArgsConstructor
 @Component
 public class EventPublisher {
 
     private final EventsStreams eventsStreams;
 
-    public EventPublisher(EventsStreams eventsStreams) {
-        this.eventsStreams = eventsStreams;
-    }
+    private final AvroMessageBuilder messageBuilder;
 
-    public void publish(UserCreatedEvent event) {
+    public void publish(Event event) {
         MessageChannel messageChannel = eventsStreams.outboundEvents();
 
-        messageChannel.send(MessageBuilder
-                .withPayload(event)
-                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-                .build());
+        com.cqshop.usermanagement.avro.UserCreatedEvent userCreatedEvent = new com.cqshop.usermanagement.avro.UserCreatedEvent();
+        userCreatedEvent.setTimestamp(System.currentTimeMillis());
+        userCreatedEvent.setUserId(((UserCreatedEvent)event).getUserId());
+
+        messageChannel.send(messageBuilder.buildMessage(userCreatedEvent));
     }
 }

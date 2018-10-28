@@ -4,8 +4,8 @@ import com.cqshop.usermanagement.infrastructure.EventsStreams;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 
 /**
- * Created by Mateusz Brycki on 11/09/2018.
+ * Created by Mateusz Brycki on 13/10/2018.
  */
 @EnableBinding(EventsStreams.class)
-public class StreamsConfig {
+public class KafkaStreamsConfig {
 }
