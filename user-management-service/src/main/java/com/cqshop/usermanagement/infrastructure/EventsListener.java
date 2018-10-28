@@ -20,6 +20,7 @@ public class EventsListener {
 
     @StreamListener(EventsStreams.INPUT)
     public void handleEvent(Flux<UserCreatedEvent> input) {
-        input.subscribe(event -> logger.info("Received: " + event.toString()));
+        input.map(event -> new UserCreatedEvent(event.getUserId() + 10, event.getTimestamp()));
+        input.subscribe(event -> logger.info("Received event: " + event.toString()));
     }
 }
