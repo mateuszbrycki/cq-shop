@@ -1,9 +1,0 @@
-{
-    "namespace": "com.cqshop.usermanagement.avro",
-    "type": "record",
-    "name": "UserCreatedEvent",
-    "fields": [
-        {"name": "userId", "type": "long"},
-        {"name": "timestamp",  "type": "long"}
-    ]
-}
