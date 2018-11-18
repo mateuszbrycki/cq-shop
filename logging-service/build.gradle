@@ -85,3 +85,18 @@ dependencyManagement {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
+
+task copyEventSchemasToResources(type: Copy) {
+    from file("../avro/")
+		include "*.avsc"
+		into file("./src/main/resources/schemas")
+}
+
+task copyEventSchemasToAvro(type: Copy) {
+    from file("../avro/")
+		include "*.avsc"
+		into file("./src/main/avro")
+}
+
+generateAvroJava.dependsOn(copyEventSchemasToResources)
+generateAvroJava.dependsOn(copyEventSchemasToAvro)
