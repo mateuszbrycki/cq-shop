@@ -7,3 +7,5 @@ kafka/*
 confluent/*
 spring.log*
 tunnels.sh
+*/src/main/resources/schema/*.avsc
+*/src/main/avro/*.avsc
