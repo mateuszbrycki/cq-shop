@@ -4,19 +4,25 @@ package com.cqshop.logging.usermanagement;
  * Created by Mateusz Brycki on 13/10/2018.
  */
 
-import com.cqshop.usermanagement.avro.UserCreatedEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.cqshop.usermanagement.avro.UserAccountCreated;
+import com.cqshop.notification.avro.ActivationLinkSent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
+@Slf4j
 @Component
 public class EventsListener {
-    private static final Logger logger = LoggerFactory.getLogger(EventsListener.class);
 
-    @StreamListener(EventsStreams.INPUT)
-    public void handleEvent(Flux<UserCreatedEvent> input) {
-        input.subscribe(event -> logger.info("Received event: " + event.toString()));
+    @StreamListener(StreamsConfig.USER_MANAGEMENT_EVENTS)
+    public void handleUserAccountCreated(Flux<UserAccountCreated> input) {
+        input.subscribe(event -> log.info("Received event UserAccountCreated: " + event.toString()));
+    }
+
+
+    @StreamListener(StreamsConfig.NOTIFICATION_EVENTS)
+    public void handleActivationLinkSent(Flux<ActivationLinkSent> input) {
+        input.subscribe(event -> log.info("Received event ActivationLinkSent: " + event.toString()));
     }
 }

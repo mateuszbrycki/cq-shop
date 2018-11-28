@@ -1,4 +1,4 @@
-package com.cqshop.usermanagement.application.command;
+package com.cqshop.notification.application.command;
 
 import com.cqshop.cqrs.common.command.AbstractApplicationCommand;
 import com.cqshop.cqrs.common.command.ApplicationCommandAnnotation;
@@ -7,7 +7,7 @@ import lombok.*;
 import java.io.Serializable;
 
 /**
- * Created by Mateusz Brycki on 01/10/2018.
+ * Created by Mateusz Brycki on 24/11/2018.
  */
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,13 +15,11 @@ import java.io.Serializable;
 @Setter
 @ToString
 @ApplicationCommandAnnotation
-public class RegisterAccountCommand extends AbstractApplicationCommand implements Serializable {
+@Builder
+public class SendActivationLink extends AbstractApplicationCommand implements Serializable {
 
     @NonNull
     private String username;
-
-    @NonNull
-    private String password;
 
     @NonNull
     private String email;

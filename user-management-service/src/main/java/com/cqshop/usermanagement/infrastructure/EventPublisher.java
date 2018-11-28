@@ -1,7 +1,7 @@
 package com.cqshop.usermanagement.infrastructure;
 
 import com.cqshop.avro.AvroMessageBuilder;
-import com.cqshop.usermanagement.domain.event.UserCreatedEvent;
+import com.cqshop.usermanagement.domain.event.UserAccountCreated;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.MessageChannel;
@@ -21,10 +21,12 @@ public class EventPublisher {
 
     public void publish(Event event) {
         MessageChannel messageChannel = eventsStreams.outboundEvents();
-
-        com.cqshop.usermanagement.avro.UserCreatedEvent userCreatedEvent = new com.cqshop.usermanagement.avro.UserCreatedEvent();
+        //TODO mbrycki reimplement - conversion should not be done in this place
+        com.cqshop.usermanagement.avro.UserAccountCreated userCreatedEvent = new com.cqshop.usermanagement.avro.UserAccountCreated();
         userCreatedEvent.setTimestamp(System.currentTimeMillis());
-        userCreatedEvent.setUserId(((UserCreatedEvent)event).getUserId());
+        userCreatedEvent.setUserId(((UserAccountCreated)event).getUserId());
+        userCreatedEvent.setEmail(((UserAccountCreated)event).getEmail());
+        userCreatedEvent.setUsername(((UserAccountCreated)event).getUsername());
 
         messageChannel.send(messageBuilder.buildMessage(userCreatedEvent));
     }

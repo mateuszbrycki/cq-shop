@@ -1,7 +1,7 @@
 package com.cqshop.usermanagement.controller;
 
 import com.cqshop.cqrs.common.validation.ValidationException;
-import com.cqshop.usermanagement.application.command.RegisterAccountCommand;
+import com.cqshop.usermanagement.dto.RegisterAccount;
 import com.cqshop.web.ExceptionResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -45,7 +45,7 @@ public class UserControllerTest {
     @Test
     public void shouldCheckEmptyPasswordAndMail() throws Exception {
 
-        RegisterAccountCommand command = new RegisterAccountCommand("user", "", "");
+        RegisterAccount command = new RegisterAccount("user", "", "");
 
         this.mockMvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -57,7 +57,7 @@ public class UserControllerTest {
     @Test
     public void shouldCheckEmptyMail() throws Exception {
 
-        RegisterAccountCommand command = new RegisterAccountCommand("user", "password", "");
+        RegisterAccount command = new RegisterAccount("user", "password", "");
 
         this.mockMvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -69,7 +69,7 @@ public class UserControllerTest {
     @Test
     public void shouldCheckEmptyUsername() throws Exception {
 
-        RegisterAccountCommand command = new RegisterAccountCommand("", "password", "mail");
+        RegisterAccount command = new RegisterAccount("", "password", "mail");
 
         this.mockMvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -81,7 +81,7 @@ public class UserControllerTest {
     @Test
     public void shouldSaveUserSuccessfully() throws Exception {
 
-        RegisterAccountCommand command = new RegisterAccountCommand("user", "password", "mail");
+        RegisterAccount command = new RegisterAccount("user", "password", "mail");
 
         this.mockMvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -94,7 +94,7 @@ public class UserControllerTest {
     @Test
     public void shouldSaveFirstUserAndRejectSecond() throws Exception {
 
-        RegisterAccountCommand command = new RegisterAccountCommand("user1", "password1", "mail1");
+        RegisterAccount command = new RegisterAccount("user1", "password1", "mail1");
 
         this.mockMvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -102,7 +102,7 @@ public class UserControllerTest {
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
 
-        RegisterAccountCommand command1 = new RegisterAccountCommand("user2", "password2", "mail1");
+        RegisterAccount command1 = new RegisterAccount("user2", "password2", "mail1");
 
         this.mockMvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
