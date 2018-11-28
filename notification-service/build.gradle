@@ -83,16 +83,16 @@ dependencyManagement {
 }
 
 task copyEventSchemasToResources(type: Copy) {
-    from file("../avro/")
-		include "*.avsc"
-		exclude "*-AC.avsc"
-		into file("./src/main/resources/schemas")
+	from file("../avro/")
+	include "*.avsc"
+	exclude "*-AC.avsc"
+	into file("./src/main/resources/schemas")
 }
 
 task copyEventSchemasToAvro(type: Copy) {
-    from file("../avro/")
-		include "*.avsc"
-		exclude "*-AC.avsc"
+	from file("../avro/")
+	include "*.avsc"
+	exclude "*-AC.avsc"
 	into file("./src/main/avro")
 }
 

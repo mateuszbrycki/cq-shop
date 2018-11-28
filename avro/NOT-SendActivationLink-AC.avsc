@@ -1,0 +1,9 @@
+{
+    "namespace": "com.cqshop.notification.application.command",
+    "type": "record",
+    "name": "SendActivationLink",
+    "fields": [
+        {"name": "username",  "type": "string"},
+        {"name": "email",  "type": "string"}
+    ]
+}
