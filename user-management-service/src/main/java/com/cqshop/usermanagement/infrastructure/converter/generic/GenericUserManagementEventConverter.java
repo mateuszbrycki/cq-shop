@@ -1,5 +1,6 @@
 package com.cqshop.usermanagement.infrastructure.converter.generic;
 
+import com.cqshop.kafka.event.EventIdBuilder;
 import com.cqshop.usermanagement.avro.GenericUserManagementEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -22,6 +23,9 @@ public abstract class GenericUserManagementEventConverter<S,T> implements Conver
     @Qualifier("mvcConversionService")
     protected ConversionService conversionService;
 
+    @Autowired
+    private EventIdBuilder eventIdBuilder;
+
     protected GenericUserManagementEvent convertToGeneric(Object event) {
 
         GenericUserManagementEvent genericUserManagementEvent = new GenericUserManagementEvent();
@@ -31,7 +35,9 @@ public abstract class GenericUserManagementEventConverter<S,T> implements Conver
         } catch (Exception e) {
             log.error(e.getMessage());
         }
+
         genericUserManagementEvent.setTimestamp(System.currentTimeMillis());
+        genericUserManagementEvent.setType(eventIdBuilder.getEventId(event.getClass().getSimpleName()));
 
         return genericUserManagementEvent;
     }
