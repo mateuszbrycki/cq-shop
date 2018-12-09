@@ -1,0 +1,9 @@
+{
+    "namespace": "com.cqshop.usermanagement.application.command",
+    "type": "record",
+    "name": "ActivationLinkClicked",
+    "fields": [
+        {"name": "userId", "type": "long"},
+        {"name": "activationCode",  "type": "string"}
+    ]
+}

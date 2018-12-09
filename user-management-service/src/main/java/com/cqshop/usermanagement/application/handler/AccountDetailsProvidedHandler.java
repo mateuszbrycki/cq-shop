@@ -4,26 +4,24 @@ import com.cqshop.cqrs.common.handler.CommandHandler;
 import com.cqshop.cqrs.common.handler.CommandHandlerAnnotation;
 import com.cqshop.usermanagement.application.command.AccountDetailsProvided;
 import com.cqshop.usermanagement.domain.User;
-import com.cqshop.usermanagement.domain.service.UserService;
+import com.cqshop.usermanagement.domain.service.UserRegistrationService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by Mateusz Brycki on 03/10/2018.
  */
+@Slf4j
 @RequiredArgsConstructor
 @CommandHandlerAnnotation
 public class AccountDetailsProvidedHandler implements CommandHandler<AccountDetailsProvided, User> {
 
-    private static final Logger logger = LoggerFactory.getLogger(AccountDetailsProvidedHandler.class);
-
-    private final UserService service;
+    private final UserRegistrationService userRegistrationService;
 
     @Override
     public User handle(AccountDetailsProvided accountDetailsProvided) {
 
-        logger.info("Received accountDetailsProvided: " + accountDetailsProvided);
+        log.info("Received accountDetailsProvided: " + accountDetailsProvided);
 
         String password = accountDetailsProvided.getPassword();
         String username = accountDetailsProvided.getUsername();
@@ -35,7 +33,7 @@ public class AccountDetailsProvidedHandler implements CommandHandler<AccountDeta
                 .email(email)
                 .build();
 
-        service.save(user);
+        userRegistrationService.registerUser(user);
 
         return user;
     }

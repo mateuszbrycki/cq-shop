@@ -1,0 +1,7 @@
+GET http://localhost:8081/user/activation/2/646986129
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+
+###

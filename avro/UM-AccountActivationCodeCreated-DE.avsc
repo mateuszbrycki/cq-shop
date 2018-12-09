@@ -1,0 +1,10 @@
+{
+    "namespace": "com.cqshop.usermanagement.avro",
+    "type": "record",
+    "name": "AccountActivationCodeCreated",
+    "fields": [
+        {"name": "userId", "type": "long"},
+        {"name": "activationCode", "type": "string"},
+        {"name": "timestamp",  "type": "long"}
+    ]
+}

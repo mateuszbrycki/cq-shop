@@ -3,6 +3,7 @@ package com.cqshop.usermanagement.domain.service;
 import com.cqshop.cqrs.common.validation.ValidationException;
 import com.cqshop.usermanagement.domain.User;
 import com.cqshop.usermanagement.domain.event.UserAccountCreated;
+import com.cqshop.usermanagement.domain.exception.UserNotFoundException;
 import com.cqshop.usermanagement.domain.repository.UserRepository;
 import com.cqshop.usermanagement.infrastructure.EventPublisher;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +19,13 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 @RequiredArgsConstructor
-public class UserService {
+public class UserRegistrationService {
 
     private final UserRepository userRepository;
     private final EventPublisher eventPublisher;
 
 
-    public User save(User user) {
+    public User registerUser(User user) {
 
         if (isNullOrEmpty(user.getPassword())
                 || isNullOrEmpty(user.getUsername())
@@ -34,7 +35,7 @@ public class UserService {
 
         String email = user.getEmail();
 
-        if (isUnique(email)) {
+        if (!isUnique(email)) {
             throw new ValidationException("User with " + email + " already exists.");
         }
 
@@ -54,7 +55,11 @@ public class UserService {
     }
 
     private boolean isUnique(String email) {
-        return this.findByEmail(email) != null;
+        try {
+            return this.findByEmail(email) != null;
+        } catch (UserNotFoundException e) {
+            return true;
+        }
     }
 
 
@@ -62,7 +67,13 @@ public class UserService {
         return value == null || value.isEmpty();
     }
 
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User findById(final Long id) throws UserNotFoundException {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Cannot find user with ID " + id));
+    }
+
+    public User findByEmail(String email) throws UserNotFoundException  {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("Cannot find user with email " + email));
     }
 }
