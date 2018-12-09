@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
+import com.cqshop.kafka.event.EventIdBuilder;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -25,11 +26,20 @@ import java.util.function.Consumer;
 public class UserManagementEventsListener {
 
     private final Gate gate;
+    private final EventIdBuilder eventIdBuilder;
+
 
     @StreamListener(UserManagementEvents.INPUT)
     public void userManagementEvents(Flux<GenericUserManagementEvent> input) {
         input.subscribe(event -> {
-            log.info("Received " + event.toString());
+
+
+            if (!event.getType().equals(eventIdBuilder.getEventId("UserAccountCreated", "user-management-service"))) {
+                return;
+            }
+
+            log.info("Received " + event);
+
             Consumer<UserAccountCreated> handleUserCreatedEvent = (userAccountCreatedEvent) -> {
                 log.info("Received event UserAccountCreated: " + event.toString());
                 gate.dispatch(SendActivationLink.builder()

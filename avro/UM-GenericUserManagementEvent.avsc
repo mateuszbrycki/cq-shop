@@ -3,7 +3,7 @@
     "type": "record",
     "name": "GenericUserManagementEvent",
     "fields": [
-        {"name": "type", "type": "int"},
+        {"name": "type", "type": "string"},
         {"name": "payload",  "type": "string"},
         {"name": "timestamp",  "type": "long"}
     ]
