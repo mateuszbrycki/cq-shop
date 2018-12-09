@@ -1,0 +1,10 @@
+{
+    "namespace": "com.cqshop.usermanagement.avro",
+    "type": "record",
+    "name": "GenericUserManagementEvent",
+    "fields": [
+        {"name": "type", "type": "int"},
+        {"name": "payload",  "type": "string"},
+        {"name": "timestamp",  "type": "long"}
+    ]
+}

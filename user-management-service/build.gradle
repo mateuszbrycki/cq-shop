@@ -66,6 +66,8 @@ dependencies {
 	compile('javax.xml.bind:jaxb-api:2.3.0')
 	compile('org.apache.avro:avro:1.8.2')
 
+	compile('org.apache.kafka:kafka-streams:2.1.0')
+
 	compileOnly('org.projectlombok:lombok')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')

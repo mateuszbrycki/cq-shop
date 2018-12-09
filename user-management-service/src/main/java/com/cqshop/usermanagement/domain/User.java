@@ -1,9 +1,6 @@
 package com.cqshop.usermanagement.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +21,7 @@ import javax.persistence.Id;
 public class User {
 
     public enum Status {
-        ACTIVATED, ARCHIVED;
+        NEW, ACTIVATED, ARCHIVED;
     }
 
     @Id
@@ -35,7 +32,8 @@ public class User {
     private String password;
     private String email;
 
+    @Setter
     @Builder.Default
-    private Status status = Status.ACTIVATED;
+    private Status status = Status.NEW;
 
 }
