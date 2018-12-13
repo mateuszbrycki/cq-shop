@@ -3,7 +3,9 @@ package com.cqshop.usermanagement.controller;
 import com.cqshop.cqrs.common.gate.Gate;
 import com.cqshop.usermanagement.application.command.AccountDetailsProvided;
 import com.cqshop.usermanagement.application.command.ActivationLinkClicked;
+import com.cqshop.usermanagement.application.command.UpdateAccountDetailsProvided;
 import com.cqshop.usermanagement.dto.RegisterAccount;
+import com.cqshop.usermanagement.dto.UpdateAccount;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,28 @@ public class UserController {
         );
 
         return HttpStatus.CREATED;
+    }
+
+    @PutMapping
+    public HttpStatus updateAccountData(@RequestBody UpdateAccount updateAccount) {
+        Boolean result = gate.dispatch(
+                UpdateAccountDetailsProvided.builder()
+                .userId(getLoggedUserId())
+                .password(updateAccount.getPassword())
+                .username(updateAccount.getUsername())
+                .build()
+        );
+
+        if (result) {
+            return HttpStatus.OK;
+        } else {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
+
+    private Long getLoggedUserId() {
+        //TODO mbrycki implement
+        return 1l;
     }
 
 
