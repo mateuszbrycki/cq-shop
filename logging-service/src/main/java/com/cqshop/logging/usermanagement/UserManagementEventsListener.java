@@ -7,6 +7,7 @@ package com.cqshop.logging.usermanagement;
 import com.cqshop.usermanagement.avro.AccountActivationCodeCreated;
 import com.cqshop.usermanagement.avro.UserAccountActivated;
 import com.cqshop.usermanagement.avro.UserAccountCreated;
+import com.cqshop.usermanagement.avro.UserAccountUpdated;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
@@ -24,9 +25,15 @@ public class UserManagementEventsListener {
     public void handleAccountActivationCodeCreated(AccountActivationCodeCreated event) {
         log.info("Received AccountActivationCodeCreated event " + event.toString());
     }
+
     @StreamListener(target = UserManagementStreamsConfig.USER_MANAGEMENT_EVENTS, condition = "headers['event-type']=='UserAccountActivated'")
     public void handleUserAccountActivated(UserAccountActivated event) {
         log.info("Received UserAccountActivated event " + event.toString());
+    }
+
+    @StreamListener(target = UserManagementStreamsConfig.USER_MANAGEMENT_EVENTS, condition = "headers['event-type']=='UserAccountUpdated'")
+    public void handleUserAccountUpdated(UserAccountUpdated event) {
+        log.info("Received UserAccountUpdated event " + event.toString());
     }
 
 

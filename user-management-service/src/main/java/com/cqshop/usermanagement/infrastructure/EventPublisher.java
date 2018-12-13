@@ -1,9 +1,6 @@
 package com.cqshop.usermanagement.infrastructure;
 
 import com.cqshop.avro.AvroMessageBuilder;
-import com.cqshop.usermanagement.domain.event.AccountActivationCodeCreated;
-import com.cqshop.usermanagement.domain.event.UserAccountActivated;
-import com.cqshop.usermanagement.domain.event.UserAccountCreated;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
@@ -31,31 +28,21 @@ public class EventPublisher {
         this.conversionService = conversionService;
     }
 
-    public void publish(AccountActivationCodeCreated event) {
-        MessageChannel messageChannel = eventsStreams.outboundEvents();
-
-        com.cqshop.usermanagement.avro.AccountActivationCodeCreated convertedDomainEvent = conversionService.convert(event, com.cqshop.usermanagement.avro.AccountActivationCodeCreated.class);
-
-        log.info("Publishing " + event.getClass() + " " + convertedDomainEvent);
-        messageChannel.send(messageBuilder.buildMessage(convertedDomainEvent));
+    public void publish(Event event) {
+        try {
+            Class avroClass = Class.forName("com.cqshop.usermanagement.avro." + event.getClass().getSimpleName());
+            Object convertedEvent = conversionService.convert(event, avroClass);
+            publishEvent(convertedEvent);
+        } catch (ClassNotFoundException e) {
+            log.error(e.getMessage());
+        }
     }
 
-    public void publish(UserAccountCreated event) {
+    private void publishEvent(Object event) {
         MessageChannel messageChannel = eventsStreams.outboundEvents();
 
-        com.cqshop.usermanagement.avro.UserAccountCreated convertedDomainEvent = conversionService.convert(event, com.cqshop.usermanagement.avro.UserAccountCreated.class);
-
-        log.info("Publishing " + event.getClass() + " " + convertedDomainEvent);
-        messageChannel.send(messageBuilder.buildMessage(convertedDomainEvent));
-    }
-
-    public void publish(UserAccountActivated event) {
-        MessageChannel messageChannel = eventsStreams.outboundEvents();
-
-        com.cqshop.usermanagement.avro.UserAccountActivated convertedDomainEvent = conversionService.convert(event, com.cqshop.usermanagement.avro.UserAccountActivated.class);
-
-        log.info("Publishing " + event.getClass() + " " + convertedDomainEvent);
-        messageChannel.send(messageBuilder.buildMessage(convertedDomainEvent));
+        log.info("Publishing " + event.getClass() + " " + event);
+        messageChannel.send(messageBuilder.buildMessage(event));
     }
 
 }

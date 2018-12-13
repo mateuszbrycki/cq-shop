@@ -17,6 +17,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @Entity
 public class User {
 

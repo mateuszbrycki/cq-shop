@@ -1,0 +1,9 @@
+{
+    "namespace": "com.cqshop.usermanagement.application.command",
+    "type": "record",
+    "name": "UpdateAccountDetailsProvided",
+    "fields": [
+        {"name": "username", "type": "string"},
+        {"name": "password",  "type": "string"}
+    ]
+}
