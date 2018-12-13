@@ -5,8 +5,7 @@ package com.cqshop.usermanagement.infrastructure.listener;
  */
 
 import com.cqshop.kafka.listener.AbstractEventListener;
-import com.cqshop.usermanagement.avro.GenericUserManagementEvent;
-import com.cqshop.usermanagement.domain.event.UserAccountCreated;
+import com.cqshop.usermanagement.avro.UserAccountCreated;
 import com.cqshop.usermanagement.domain.repository.UserRepository;
 import com.cqshop.usermanagement.domain.service.AccountActivationService;
 import com.cqshop.usermanagement.infrastructure.EventsStreams;
@@ -14,8 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 
 import java.util.function.Consumer;
 
@@ -34,17 +33,18 @@ public class UserAccountCreatedEventListener extends AbstractEventListener {
         this.userRepository = userRepository;
     }
 
-    @StreamListener(EventsStreams.INPUT)
-    public void handleEvent(Flux<GenericUserManagementEvent> flux) {
-        flux.subscribe(event -> {
-            log.info("Received " + event);
+    @StreamListener(target = EventsStreams.INPUT, condition = "headers['event-type']=='UserAccountCreated'")
+    public void handleEvent(@Payload UserAccountCreated event) {
+//        flux.subscribe(event -> {
+            log.info("Received UserAccountCreated" + event);
             Consumer<UserAccountCreated> handleUserAccountCreatedEvent = (convertedEvent) -> userRepository.findById(convertedEvent.getUserId())
                     .ifPresent(accountActivationService::generateActivationCodeForRegisteredUser);
 
-            convert(event, UserAccountCreated.class)
-                    .ifPresent(handleUserAccountCreatedEvent);
+            handleUserAccountCreatedEvent.accept(event);
+/*            convert(event, UserAccountCreated.class)
+                    .ifPresent(handleUserAccountCreatedEvent);*/
 
-        });
+//        });
     }
 
 }

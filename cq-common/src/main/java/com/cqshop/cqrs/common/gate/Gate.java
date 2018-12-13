@@ -8,5 +8,5 @@ import com.cqshop.cqrs.common.command.AbstractApplicationCommand;
 public interface Gate {
 
     //TODO mbrycki dispatchAsync
-    Object dispatch(AbstractApplicationCommand command);
+    <T> T dispatch(AbstractApplicationCommand command);
 }

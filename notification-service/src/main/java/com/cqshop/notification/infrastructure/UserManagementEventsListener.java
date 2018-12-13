@@ -29,14 +29,8 @@ public class UserManagementEventsListener {
     private final EventIdBuilder eventIdBuilder;
 
 
-    @StreamListener(UserManagementEvents.INPUT)
-    public void userManagementEvents(Flux<GenericUserManagementEvent> input) {
-        input.subscribe(event -> {
-
-
-            if (!event.getType().equals(eventIdBuilder.getEventId("UserAccountCreated", "user-management-service"))) {
-                return;
-            }
+    @StreamListener(target = UserManagementEvents.INPUT, condition = "headers['event-type']=='UserAccountCreated'")
+    public void userManagementEvents(UserAccountCreated event) {
 
             log.info("Received " + event);
 
@@ -49,17 +43,6 @@ public class UserManagementEventsListener {
                 );
             };
 
-            convertToObject(event.getPayload(), UserAccountCreated.class)
-                    .ifPresent(handleUserCreatedEvent);
-        });
-    }
-
-    protected <T> Optional<T> convertToObject(String payload, Class<T> type) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return Optional.of(mapper.readValue(payload, type));
-        } catch (IOException e) {
-            return Optional.empty();
-        }
+            handleUserCreatedEvent.accept(event);
     }
 }

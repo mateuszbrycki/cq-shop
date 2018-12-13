@@ -17,6 +17,7 @@ public class AvroMessageBuilder {
         return MessageBuilder
                 .withPayload(event)
                 .setHeader(MessageHeaders.CONTENT_TYPE, MimeType.valueOf(AvroMimeType.AVRO_MIME_TYPE))
+                .setHeader("event-type", event.getClass().getSimpleName())
                 .build();
     }
 

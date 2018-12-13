@@ -21,12 +21,12 @@ public class SpringGate implements Gate {
 
 
     @Override
-    public Object dispatch(AbstractApplicationCommand command) {
+    public <T> T dispatch(AbstractApplicationCommand command) {
 
-        CommandHandler<ApplicationCommand, Object> commandHandler = commandHandlerProvider.findHandler(command);
+        CommandHandler<ApplicationCommand, T> commandHandler = commandHandlerProvider.findHandler(command);
 
         //TODO mbrycki implement asynchronous command
-        Object result = commandHandler.handle(command);
+        T result = commandHandler.handle(command);
 
         commandPublisher.publish(command);
         return result;
