@@ -24,7 +24,7 @@ public class EventPublisher {
 
         com.cqshop.notification.avro.ActivationLinkSent activationLinkSent = new com.cqshop.notification.avro.ActivationLinkSent();
         activationLinkSent.setEmail(((ActivationLinkSent)event).getEmail());
-        activationLinkSent.setUsername(((ActivationLinkSent)event).getUsername() + "-domain");
+        activationLinkSent.setUsername(((ActivationLinkSent)event).getUsername());
         activationLinkSent.setTimestamp(System.currentTimeMillis());
 
 

@@ -36,14 +36,18 @@ public class UserController {
     public HttpStatus activateAccountByClickingLink(@PathVariable("userId") Long userId,
                                                     @PathVariable("activationCode") String activationCode) {
 
-        //TODO mbrycki check result
-        Object result = gate.dispatch(
+        Boolean result = gate.dispatch(
                 ActivationLinkClicked.builder()
                 .userId(userId)
                 .activationCode(activationCode)
                 .build()
         );
 
-        return HttpStatus.OK;
+        if (result) {
+            return HttpStatus.OK;
+        } else {
+            return HttpStatus.BAD_REQUEST;
+        }
+
     }
 }
