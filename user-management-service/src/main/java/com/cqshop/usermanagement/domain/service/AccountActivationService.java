@@ -5,6 +5,7 @@ import com.cqshop.usermanagement.domain.User;
 import com.cqshop.usermanagement.domain.event.AccountActivationCodeCreated;
 import com.cqshop.usermanagement.domain.event.UserAccountActivated;
 import com.cqshop.usermanagement.domain.exception.AccountActivationCodeNotFound;
+import com.cqshop.usermanagement.domain.exception.UserNotFoundException;
 import com.cqshop.usermanagement.domain.repository.AccountActivationCodeRepository;
 import com.cqshop.usermanagement.domain.repository.UserRepository;
 import com.cqshop.usermanagement.infrastructure.EventPublisher;
@@ -28,16 +29,13 @@ public class AccountActivationService {
     private final EventPublisher eventPublisher;
 
 
-    public Boolean activateAccountWithActivationCode(User user, String activationCode) throws AccountActivationCodeNotFound {
+    public Boolean activateAccountWithActivationCode(long userId, String activationCode) throws AccountActivationCodeNotFound, UserNotFoundException {
 
-        if (user == null) {
-            log.error("Got empty user account");
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
 
-            return false;
-        }
-
-        AccountActivationCode userActivationCode = accountActivationCodeRepository.findByUserId(user.getID())
-                .orElseThrow(() -> new AccountActivationCodeNotFound("Activation code for user " + user.getID() + " not found"));
+        AccountActivationCode userActivationCode = accountActivationCodeRepository.findByUser(user)
+                .orElseThrow(() -> new AccountActivationCodeNotFound("Activation code for user " + user.getUserId() + " not found"));
 
         if (!areCodesEqual(userActivationCode, activationCode)) {
             return false;
@@ -45,7 +43,7 @@ public class AccountActivationService {
 
         activateAccount(user);
         eventPublisher.publish(UserAccountActivated.builder()
-                .userId(user.getID())
+                .userId(user.getUserId())
                 .build()
         );
 
@@ -58,14 +56,14 @@ public class AccountActivationService {
         String activationCode = generateActivationCode(user);
 
         AccountActivationCode accountActivationCode = AccountActivationCode.builder()
-                .userId(user.getID())
+                .user(user)
                 .activationCode(activationCode)
                 .build();
 
         accountActivationCode = accountActivationCodeRepository.save(accountActivationCode);
 
         eventPublisher.publish(AccountActivationCodeCreated.builder()
-                .userId(accountActivationCode.getUserId())
+                .userId(accountActivationCode.getUser().getUserId())
                 .activationCode(accountActivationCode.getActivationCode())
                 .build()
         );
@@ -74,7 +72,7 @@ public class AccountActivationService {
     }
 
     private String generateActivationCode(User user) {
-        return String.valueOf((user.getID().toString() + "-activation").hashCode());
+        return String.valueOf((user.getUserId().toString() + "-activation").hashCode());
     }
 
     private boolean areCodesEqual(AccountActivationCode userActivationCode, String activationCode) {

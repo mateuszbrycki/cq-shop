@@ -25,10 +25,10 @@ public class AccountUpdateService {
 
     public boolean updateAccount(User newUserData) {
 
-        Optional<User> user = userRepository.findById(newUserData.getID());
+        Optional<User> user = userRepository.findById(newUserData.getUserId());
 
         if (!user.isPresent()) {
-            throw new ValidationException("User with " + newUserData.getID() + " does not exist.");
+            throw new ValidationException("User with " + newUserData.getUserId() + " does not exist.");
         }
 
         User existingUser = user.get();
@@ -39,13 +39,13 @@ public class AccountUpdateService {
 
         this.eventPublisher.publish(
                 UserAccountUpdated.builder()
-                        .userId(existingUser.getID())
+                        .userId(existingUser.getUserId())
                         .email(existingUser.getEmail())
                         .username(existingUser.getUsername())
                         .build()
         );
 
-        log.info(String.format("User %s (%d) updated successfully.", existingUser.getUsername(), existingUser.getID()));
+        log.info(String.format("User %s (%d) updated successfully.", existingUser.getUsername(), existingUser.getUserId()));
 
         return true;
 

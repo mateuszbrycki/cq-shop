@@ -4,6 +4,7 @@
     "name": "UpdateAccountDetailsProvided",
     "fields": [
         {"name": "username", "type": "string"},
-        {"name": "password",  "type": "string"}
+        {"name": "password",  "type": "string"},
+        {"name": "timestamp",  "type": "long"}
     ]
 }

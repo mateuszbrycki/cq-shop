@@ -1,14 +1,11 @@
 package com.cqshop.usermanagement.domain;
 
-import com.cqshop.usermanagement.domain.id.AccountActivationCodeId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -19,14 +16,16 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Getter
 @Entity
-@IdClass(AccountActivationCodeId.class)
 public class AccountActivationCode {
 
     @Id
-    @NotNull
-    private Long userId;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long activationCodeId;
 
-    @Id
+    @OneToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
     @NotNull
     private String activationCode;
 

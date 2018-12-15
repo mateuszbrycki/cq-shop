@@ -24,7 +24,7 @@ public class UpdateAccountDetailsProvidedHandler implements CommandHandler<Updat
         log.info("Received updateAccountDetailsProvided: " + accountDetailsProvided);
 
         User user = User.builder()
-                .ID(accountDetailsProvided.getUserId())
+                .userId(accountDetailsProvided.getUserId())
                 .username(accountDetailsProvided.getUsername())
                 .password(accountDetailsProvided.getPassword())
                 .build();

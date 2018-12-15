@@ -4,10 +4,7 @@ package com.cqshop.logging.usermanagement;
  * Created by Mateusz Brycki on 13/10/2018.
  */
 
-import com.cqshop.usermanagement.avro.AccountActivationCodeCreated;
-import com.cqshop.usermanagement.avro.UserAccountActivated;
-import com.cqshop.usermanagement.avro.UserAccountCreated;
-import com.cqshop.usermanagement.avro.UserAccountUpdated;
+import com.cqshop.usermanagement.avro.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
@@ -34,6 +31,11 @@ public class UserManagementEventsListener {
     @StreamListener(target = UserManagementStreamsConfig.USER_MANAGEMENT_EVENTS, condition = "headers['event-type']=='UserAccountUpdated'")
     public void handleUserAccountUpdated(UserAccountUpdated event) {
         log.info("Received UserAccountUpdated event " + event.toString());
+    }
+
+    @StreamListener(target = UserManagementStreamsConfig.USER_MANAGEMENT_EVENTS, condition = "headers['event-type']=='UserAccountRemoved'")
+    public void handleUserAccountRemoved(UserAccountRemoved event) {
+        log.info("Received UserAccountRemoved event " + event.toString());
     }
 
 

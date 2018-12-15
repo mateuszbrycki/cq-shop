@@ -5,10 +5,13 @@ package com.cqshop.usermanagement.domain.exception;
  */
 
 public class UserNotFoundException extends Exception {
-    public UserNotFoundException() {
+
+    public UserNotFoundException(long userId) {
+        super("Cannot find user with userId " + userId);
     }
 
-    public UserNotFoundException(String message) {
-        super(message);
+    public UserNotFoundException(String email) {
+        super("Cannot find user with email " + email);
     }
+
 }
