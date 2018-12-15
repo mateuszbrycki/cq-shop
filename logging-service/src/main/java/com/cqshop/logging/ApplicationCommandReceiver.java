@@ -6,6 +6,7 @@ import com.cqshop.notification.application.command.SendActivationLink;
 import com.cqshop.usermanagement.application.command.AccountDetailsProvided;
 import com.cqshop.usermanagement.avro.UserCreatedEvent;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +18,8 @@ import org.springframework.stereotype.Component;
 public class ApplicationCommandReceiver {
 
     @KafkaListener(topics = "${cq-common.application-command-topic}")
-    public void listen(Object command) {
-        log.info("Received application command " + command);
+    public void listen(ConsumerRecord command) {
+        log.info("Received application command " + command.value().toString());
     }
 
 

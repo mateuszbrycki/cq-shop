@@ -1,0 +1,9 @@
+{
+    "namespace": "com.cqshop.usermanagement.avro",
+    "type": "record",
+    "name": "UserAccountRemoved",
+    "fields": [
+      {"name": "userId", "type": "long"},
+      {"name": "timestamp",  "type": "long"}
+    ]
+}

@@ -1,10 +1,10 @@
 {
     "namespace": "com.cqshop.usermanagement.application.command",
     "type": "record",
-    "name": "ActivationLinkClicked",
+    "name": "AccountRemovalRequested",
     "fields": [
         {"name": "userId", "type": "long"},
-        {"name": "activationCode",  "type": "string"},
+        {"name": "password",  "type": "string"},
         {"name": "timestamp",  "type": "long"}
     ]
 }

@@ -2,7 +2,7 @@ package com.cqshop.usermanagement.controller;
 
 import com.cqshop.cqrs.common.gate.Gate;
 import com.cqshop.usermanagement.application.command.AccountDetailsProvided;
-import com.cqshop.usermanagement.application.command.ActivationLinkClicked;
+import com.cqshop.usermanagement.application.command.AccountRemovalRequested;
 import com.cqshop.usermanagement.application.command.UpdateAccountDetailsProvided;
 import com.cqshop.usermanagement.dto.RegisterAccount;
 import com.cqshop.usermanagement.dto.UpdateAccount;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class AccountController {
 
     private final Gate gate;
 
@@ -43,35 +43,32 @@ public class UserController {
                 .build()
         );
 
+        return processResult(result);
+    }
+
+    @DeleteMapping
+    public HttpStatus removeUserAccount() {
+        Boolean result = gate.dispatch(
+                AccountRemovalRequested.builder()
+                .userId(getLoggedUserId())
+                .build()
+        );
+
+        return processResult(result);
+    }
+
+    private HttpStatus processResult(Boolean result) {
         if (result) {
             return HttpStatus.OK;
         } else {
             return HttpStatus.BAD_REQUEST;
         }
     }
+
 
     private Long getLoggedUserId() {
         //TODO mbrycki implement
         return 1l;
     }
 
-
-    @GetMapping("/activation/{userId}/{activationCode}")
-    public HttpStatus activateAccountByClickingLink(@PathVariable("userId") Long userId,
-                                                    @PathVariable("activationCode") String activationCode) {
-
-        Boolean result = gate.dispatch(
-                ActivationLinkClicked.builder()
-                .userId(userId)
-                .activationCode(activationCode)
-                .build()
-        );
-
-        if (result) {
-            return HttpStatus.OK;
-        } else {
-            return HttpStatus.BAD_REQUEST;
-        }
-
-    }
 }

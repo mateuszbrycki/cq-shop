@@ -5,6 +5,7 @@
     "fields": [
         {"name": "username", "type": "string"},
         {"name": "password",  "type": "string"},
-        {"name": "email",  "type": "string"}
+        {"name": "email",  "type": "string"},
+        {"name": "timestamp",  "type": "long"}
     ]
 }

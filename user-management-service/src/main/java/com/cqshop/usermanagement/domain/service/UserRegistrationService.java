@@ -3,7 +3,6 @@ package com.cqshop.usermanagement.domain.service;
 import com.cqshop.cqrs.common.validation.ValidationException;
 import com.cqshop.usermanagement.domain.User;
 import com.cqshop.usermanagement.domain.event.UserAccountCreated;
-import com.cqshop.usermanagement.domain.exception.UserNotFoundException;
 import com.cqshop.usermanagement.domain.repository.UserRepository;
 import com.cqshop.usermanagement.infrastructure.EventPublisher;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by Mateusz Brycki on 01/10/2018.
@@ -43,23 +43,19 @@ public class UserRegistrationService {
 
         this.eventPublisher.publish(
                 UserAccountCreated.builder()
-                .userId(user.getID())
+                .userId(user.getUserId())
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .build()
         );
 
-        log.info(String.format("User %s (%d) registered successfully.", user.getUsername(), user.getID()));
+        log.info(String.format("User %s (%d) registered successfully.", user.getUsername(), user.getUserId()));
 
         return user;
     }
 
     private boolean isUnique(String email) {
-        try {
-            return this.findByEmail(email) != null;
-        } catch (UserNotFoundException e) {
-            return true;
-        }
+        return this.findByEmail(email).isEmpty();
     }
 
 
@@ -67,13 +63,8 @@ public class UserRegistrationService {
         return value == null || value.isEmpty();
     }
 
-    public User findById(final Long id) throws UserNotFoundException {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("Cannot find user with ID " + id));
-    }
-
-    public User findByEmail(String email) throws UserNotFoundException  {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("Cannot find user with email " + email));
+    private List<User> findByEmail(String email) {
+        List<User> allByEmail = userRepository.findAllByEmail(email);
+        return allByEmail;
     }
 }
