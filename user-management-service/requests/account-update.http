@@ -1,0 +1,8 @@
+PUT http://localhost:8081/user/1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{   "username":"new-username3",   "password":"new-password3" }
+
+###
