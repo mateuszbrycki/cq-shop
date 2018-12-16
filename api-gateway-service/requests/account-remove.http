@@ -1,0 +1,6 @@
+DELETE http://username:password@localhost:8080/user/2
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+###

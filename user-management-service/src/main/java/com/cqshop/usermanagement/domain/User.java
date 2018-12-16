@@ -1,11 +1,10 @@
 package com.cqshop.usermanagement.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Mateusz Brycki on 01/10/2018.
@@ -19,6 +18,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @Entity
+@Table(name="user_account")
 public class User {
 
     public enum Status {
@@ -36,5 +36,11 @@ public class User {
     @Setter
     @Builder.Default
     private Status status = Status.NEW;
+
+    @NotNull
+    @OneToOne
+    @JoinColumn(name="fk_role_id")
+    @JsonIgnore
+    private UserRole role;
 
 }

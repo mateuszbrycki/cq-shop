@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/user/activation")
+@RequestMapping("/api/user")
 public class AccountActivationController {
 
     private final Gate gate;
 
-    @GetMapping("/{userId}/{activationCode}")
+    @GetMapping("/{userId}/activation/{activationCode}")
     public HttpStatus activateAccountByClickingLink(@PathVariable("userId") Long userId,
                                                     @PathVariable("activationCode") String activationCode) {
 

@@ -2,11 +2,14 @@ package com.cqshop.usermanagement.domain.service;
 
 import com.cqshop.cqrs.common.validation.ValidationException;
 import com.cqshop.usermanagement.domain.User;
+import com.cqshop.usermanagement.domain.UserRole;
 import com.cqshop.usermanagement.domain.event.UserAccountCreated;
 import com.cqshop.usermanagement.domain.repository.UserRepository;
+import com.cqshop.usermanagement.domain.repository.UserRoleRepository;
 import com.cqshop.usermanagement.infrastructure.EventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -22,7 +25,12 @@ import java.util.List;
 public class UserRegistrationService {
 
     private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
     private final EventPublisher eventPublisher;
+
 
 
     public User registerUser(User user) {
@@ -38,6 +46,9 @@ public class UserRegistrationService {
         if (!isUnique(email)) {
             throw new ValidationException("User with " + email + " already exists.");
         }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(userRoleRepository.findByRole(UserRole.DEFAULT_ROLE));
 
         user = this.userRepository.save(user);
 
