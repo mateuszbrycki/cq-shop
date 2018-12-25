@@ -1,4 +1,4 @@
-package com.cqshop.usermanagement.infrastructure;
+package com.cqshop.kafka.event;
 
 import lombok.*;
 

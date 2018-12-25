@@ -1,0 +1,10 @@
+{
+    "namespace": "com.cqshop.cart.avro",
+    "type": "record",
+    "name": "UserCartCreated",
+    "fields": [
+        {"name": "userId",  "type": "long"},
+        {"name": "cartId",  "type": "long"},
+        {"name": "timestamp",  "type": "long"}
+    ]
+}
