@@ -1,10 +1,11 @@
-package com.cqshop.usermanagement.domain.event;
+package com.cqshop.cart.domain.event;
 
 import com.cqshop.kafka.event.Event;
 import lombok.*;
 
+
 /**
- * Created by Mateusz Brycki on 15/12/2018.
+ * Created by Mateusz Brycki on 25/12/2018.
  */
 @Getter
 @Setter
@@ -12,9 +13,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserAccountRemoved extends Event {
+public class UserCartCreated extends Event {
 
     @NonNull
     private Long userId;
 
+    @NonNull
+    private Long cartId;
 }

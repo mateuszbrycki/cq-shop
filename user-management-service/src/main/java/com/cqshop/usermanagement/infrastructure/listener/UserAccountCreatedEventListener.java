@@ -35,16 +35,12 @@ public class UserAccountCreatedEventListener extends AbstractEventListener {
 
     @StreamListener(target = EventsStreams.INPUT, condition = "headers['event-type']=='UserAccountCreated'")
     public void handleEvent(@Payload UserAccountCreated event) {
-//        flux.subscribe(event -> {
             log.info("Received UserAccountCreated" + event);
+            //TODO mbrycki should create a application command and handle creation in the handler
             Consumer<UserAccountCreated> handleUserAccountCreatedEvent = (convertedEvent) -> userRepository.findById(convertedEvent.getUserId())
                     .ifPresent(accountActivationService::generateActivationCodeForRegisteredUser);
 
             handleUserAccountCreatedEvent.accept(event);
-/*            convert(event, UserAccountCreated.class)
-                    .ifPresent(handleUserAccountCreatedEvent);*/
-
-//        });
     }
 
 }

@@ -1,4 +1,4 @@
-package com.cqshop.usermanagement.infrastructure;
+package com.cqshop.cart.infrastructure;
 
 import com.cqshop.avro.AvroMessageBuilder;
 import com.cqshop.kafka.event.Event;
@@ -31,7 +31,7 @@ public class EventPublisher {
 
     public void publish(Event event) {
         try {
-            Class avroClass = Class.forName("com.cqshop.usermanagement.avro." + event.getClass().getSimpleName());
+            Class avroClass = Class.forName("com.cqshop.cart.avro." + event.getClass().getSimpleName());
             Object convertedEvent = conversionService.convert(event, avroClass);
             publishEvent(convertedEvent);
         } catch (ClassNotFoundException e) {

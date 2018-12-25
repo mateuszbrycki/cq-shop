@@ -4,7 +4,7 @@ package com.cqshop.logging;
 import com.cqshop.cqrs.common.command.ApplicationCommand;
 import com.cqshop.notification.application.command.SendActivationLink;
 import com.cqshop.usermanagement.application.command.AccountDetailsProvided;
-import com.cqshop.usermanagement.avro.UserCreatedEvent;
+import com.cqshop.usermanagement.avro.UserAccountCreated;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;

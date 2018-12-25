@@ -1,9 +1,7 @@
 package com.cqshop.usermanagement.domain.event;
 
-import com.cqshop.cqrs.common.command.AbstractApplicationCommand;
-import com.cqshop.usermanagement.infrastructure.Event;
+import com.cqshop.kafka.event.Event;
 import lombok.*;
-
 
 import javax.validation.constraints.NotNull;
 
