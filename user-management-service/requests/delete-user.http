@@ -1,7 +1,0 @@
-DELETE http://localhost:8081/user
-Accept: */*
-Cache-Control: no-cache
-Content-Type: application/json
-
-
-###
