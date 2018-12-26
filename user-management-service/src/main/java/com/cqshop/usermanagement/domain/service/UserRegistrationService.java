@@ -31,8 +31,6 @@ public class UserRegistrationService {
 
     private final EventPublisher eventPublisher;
 
-
-
     public User registerUser(User user) {
 
         if (isNullOrEmpty(user.getPassword())

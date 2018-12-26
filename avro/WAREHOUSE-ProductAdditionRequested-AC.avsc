@@ -1,0 +1,13 @@
+{
+    "namespace": "com.cqshop.warehouse.application.command",
+    "type": "record",
+    "name": "ProductAdditionRequested",
+    "fields": [
+        {"name": "code", "type": "string"},
+        {"name": "name", "type": "string"},
+        {"name": "description", "type": "string"},
+        {"name": "quantity",  "type": "int"},
+        {"name": "timestamp",  "type": "long"}
+
+    ]
+}
