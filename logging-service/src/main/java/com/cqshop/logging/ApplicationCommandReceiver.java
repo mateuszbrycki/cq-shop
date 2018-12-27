@@ -19,7 +19,7 @@ public class ApplicationCommandReceiver {
 
     @KafkaListener(topics = "${cq-common.application-command-topic}")
     public void listen(ConsumerRecord command) {
-        log.info("Received application command " + command.value().toString());
+        log.info("Received AC {} {}", command.value().getClass().getSimpleName(),  command.value().toString());
     }
 
 

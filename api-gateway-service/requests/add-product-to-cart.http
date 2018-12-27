@@ -1,0 +1,6 @@
+GET http://username-1:password-1@localhost:8080/cart/product/1?quantity=10
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+###

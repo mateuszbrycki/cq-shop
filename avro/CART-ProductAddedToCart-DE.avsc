@@ -1,0 +1,12 @@
+{
+    "namespace": "com.cqshop.cart.avro",
+    "type": "record",
+    "name": "ProductAddedToCart",
+    "fields": [
+        {"name": "productId",  "type": "long"},
+        {"name": "cartId",  "type": "long"},
+        {"name": "quantity",  "type": "int"},
+        {"name": "price",  "type": "double"},
+        {"name": "timestamp",  "type": "long"}
+    ]
+}
