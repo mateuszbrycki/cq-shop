@@ -1,0 +1,12 @@
+{
+    "namespace": "com.cqshop.warehouse.avro",
+    "type": "record",
+    "name": "ProductReservationCreated",
+    "fields": [
+        {"name": "productId", "type": "long"},
+        {"name": "userId", "type": "long"},
+        {"name": "id", "type": "long"},
+        {"name": "quantity",  "type": "int"},
+        {"name": "timestamp",  "type": "long"}
+    ]
+}

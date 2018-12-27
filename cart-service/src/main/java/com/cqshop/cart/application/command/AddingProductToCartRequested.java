@@ -7,7 +7,7 @@ import lombok.*;
 import java.io.Serializable;
 
 /**
- * Created by Mateusz Brycki on 25/12/2018.
+ * Created by Mateusz Brycki on 27/12/2018.
  */
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +16,15 @@ import java.io.Serializable;
 @ToString
 @ApplicationCommandAnnotation
 @Builder
-public class CartForNewUserCreationRequested extends AbstractApplicationCommand implements Serializable {
+public class AddingProductToCartRequested extends AbstractApplicationCommand implements Serializable {
+
     @NonNull
-    private Long userId;
+    private long productId;
+
+    @NonNull
+    private int quantity;
+
+    @NonNull
+    private long userId;
+
 }

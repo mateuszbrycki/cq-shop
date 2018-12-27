@@ -1,6 +1,6 @@
 package com.cqshop.cart.application.handler;
 
-import com.cqshop.cart.application.command.CartForNewUserCreationRequested;
+import com.cqshop.cart.application.command.CartCreationRequested;
 import com.cqshop.cart.domain.service.CartCreationService;
 import com.cqshop.cqrs.common.handler.CommandHandler;
 import com.cqshop.cqrs.common.handler.CommandHandlerAnnotation;
@@ -13,12 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @CommandHandlerAnnotation
-public class CartForNewUserCreationRequestedHandler implements CommandHandler<CartForNewUserCreationRequested, Boolean> {
+public class CartCreationRequestedHandler implements CommandHandler<CartCreationRequested, Boolean> {
 
     private final CartCreationService cartCreationService;
 
     @Override
-    public Boolean handle(CartForNewUserCreationRequested cartForNewUserCreationRequested) {
+    public Boolean handle(CartCreationRequested cartForNewUserCreationRequested) {
 
         log.info("Received cartForNewUserCreationRequested: " + cartForNewUserCreationRequested);
 

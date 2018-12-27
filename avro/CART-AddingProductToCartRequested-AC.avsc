@@ -1,8 +1,10 @@
 {
     "namespace": "com.cqshop.cart.application.command",
     "type": "record",
-    "name": "CartCreationRequested",
+    "name": "AddingProductToCartRequested",
     "fields": [
+        {"name": "productId",  "type": "long"},
+        {"name": "quantity",  "type": "int"},
         {"name": "userId",  "type": "long"},
         {"name": "timestamp",  "type": "long"}
     ]

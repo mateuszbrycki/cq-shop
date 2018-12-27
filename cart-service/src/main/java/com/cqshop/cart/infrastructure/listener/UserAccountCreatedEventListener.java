@@ -4,8 +4,7 @@ package com.cqshop.cart.infrastructure.listener;
  * Created by Mateusz Brycki on 13/10/2018.
  */
 
-import com.cqshop.cart.application.command.CartForNewUserCreationRequested;
-import com.cqshop.cart.infrastructure.EventsStreams;
+import com.cqshop.cart.application.command.CartCreationRequested;
 import com.cqshop.cqrs.common.gate.Gate;
 import com.cqshop.kafka.listener.AbstractEventListener;
 import com.cqshop.usermanagement.avro.UserAccountCreated;
@@ -36,7 +35,7 @@ public class UserAccountCreatedEventListener extends AbstractEventListener {
             Consumer<UserAccountCreated> handleUserAccountCreatedEvent = (convertedEvent) -> {
 
                 gate.dispatch(
-                        CartForNewUserCreationRequested.builder()
+                        CartCreationRequested.builder()
                                 .userId(convertedEvent.getUserId())
                                 .build()
                 );
