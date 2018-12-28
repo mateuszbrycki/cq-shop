@@ -1,9 +1,6 @@
 package com.cqshop.logging.cart;
 
-import com.cqshop.cart.avro.CartLineUpdated;
-import com.cqshop.cart.avro.ProductAddedToCart;
-import com.cqshop.cart.avro.ProductRemovedFromCart;
-import com.cqshop.cart.avro.UserCartCreated;
+import com.cqshop.cart.avro.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
@@ -23,6 +20,11 @@ public class CartEventsListener {
     @StreamListener(target = CartStreamsConfig.CART_EVENTS, condition = "headers['event-type']=='CartLineUpdated'")
     public void handleCartLineUpdated(CartLineUpdated event) {
         log.info("Received CartLineUpdated event " + event.toString());
+    }
+
+    @StreamListener(target = CartStreamsConfig.CART_EVENTS, condition = "headers['event-type']=='CartLineRemoved'")
+    public void handleCartLineRemoved(CartLineRemoved event) {
+        log.info("Received CartLineRemoved event " + event.toString());
     }
 
     @StreamListener(target = CartStreamsConfig.CART_EVENTS, condition = "headers['event-type']=='ProductAddedToCart'")

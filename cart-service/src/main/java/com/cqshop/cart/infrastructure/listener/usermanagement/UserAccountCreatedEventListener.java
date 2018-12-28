@@ -1,4 +1,4 @@
-package com.cqshop.cart.infrastructure.listener;
+package com.cqshop.cart.infrastructure.listener.usermanagement;
 
 /**
  * Created by Mateusz Brycki on 13/10/2018.

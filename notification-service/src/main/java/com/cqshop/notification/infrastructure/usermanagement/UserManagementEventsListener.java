@@ -1,20 +1,14 @@
-package com.cqshop.notification.infrastructure;
+package com.cqshop.notification.infrastructure.usermanagement;
 
 import com.cqshop.cqrs.common.gate.Gate;
 import com.cqshop.notification.application.command.SendActivationLink;
-import com.cqshop.notification.avro.ActivationLinkSent;
-import com.cqshop.usermanagement.avro.GenericUserManagementEvent;
 import com.cqshop.usermanagement.avro.UserAccountCreated;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 import com.cqshop.kafka.event.EventIdBuilder;
 
-import java.io.IOException;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 /**

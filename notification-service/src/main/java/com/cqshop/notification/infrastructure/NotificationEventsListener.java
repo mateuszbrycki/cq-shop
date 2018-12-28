@@ -17,7 +17,7 @@ import reactor.core.publisher.Flux;
 public class NotificationEventsListener {
 
 
-    @StreamListener(NotificationStreams.INPUT)
+    @StreamListener(EventsStreams.INPUT)
     public void notificationServiceEventsIn(Flux<ActivationLinkSent> input) {
         input.subscribe(event -> {
                 log.info("Received event ActivationLinkSent: " + event.toString());

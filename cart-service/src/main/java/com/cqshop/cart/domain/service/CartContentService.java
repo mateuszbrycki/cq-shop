@@ -3,9 +3,11 @@ package com.cqshop.cart.domain.service;
 import com.cqshop.cart.application.command.CartCreationRequested;
 import com.cqshop.cart.domain.Cart;
 import com.cqshop.cart.domain.CartLine;
+import com.cqshop.cart.domain.event.CartLineRemoved;
 import com.cqshop.cart.domain.event.CartLineUpdated;
 import com.cqshop.cart.domain.event.ProductAddedToCart;
 import com.cqshop.cart.domain.event.ProductRemovedFromCart;
+import com.cqshop.cart.domain.repository.CartLineRepository;
 import com.cqshop.cart.domain.repository.CartRepository;
 import com.cqshop.cart.infrastructure.EventPublisher;
 import com.cqshop.cqrs.common.gate.Gate;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Optional;
 
 /**
@@ -25,6 +28,7 @@ public class CartContentService {
 
     private final Gate gate;
     private final CartRepository cartRepository;
+    private final CartLineRepository cartLineRepository;
     private final ReservationService reservationService;
     private final EventPublisher eventPublisher;
 
@@ -152,5 +156,30 @@ public class CartContentService {
                         .userId(userId)
                         .build()
         );
+    }
+
+    public Boolean removeCartLines(long userId) {
+        Optional<Cart> cart = cartRepository.findByCartOwner(userId);
+
+        if (!cart.isPresent()) {
+            log.error("Cannot find a cart for user {}", userId);
+            return false;
+        }
+
+        for (CartLine cartLine : cart.get().getCartLines()) {
+            cartLineRepository.delete(cartLine);
+
+            eventPublisher.publish(
+                    CartLineRemoved.builder()
+                            .cartLineId(cartLine.getCartLineId())
+                            .productId(cartLine.getProductId())
+                            .userId(userId)
+                            .quantity(cartLine.getQuantity())
+                            .price(cartLine.getPrice())
+                            .build()
+            );
+        }
+
+        return true;
     }
 }
