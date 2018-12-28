@@ -1,5 +1,6 @@
 package com.cqshop.cart.domain.repository;
 
+import com.cqshop.cart.dto.CreateReservation;
 import feign.Param;
 import feign.RequestLine;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,6 +12,9 @@ import org.springframework.http.HttpStatus;
 @FeignClient("warehouse-service")
 public interface WarehouseRepository {
 
-    @RequestLine("GET /api/reservation/product/{productId}/quantity/{quantity}?userId={userId}")
-    HttpStatus reserve(@Param("productId") Long productId, @Param("quantity") Integer quantity, @Param("userId") Long userId);
+    @RequestLine("POST /api/reservation/product")
+    HttpStatus reserve(CreateReservation createReservation);
+
+    @RequestLine("DELETE /api/reservation/product/{productId}/user/{userId}")
+    HttpStatus remove(@Param("productId") Long productId, @Param("userId") Long userId);
 }

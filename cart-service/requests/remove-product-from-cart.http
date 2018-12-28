@@ -1,0 +1,7 @@
+DELETE http://localhost:8083/api/cart/product/1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+X-User-Id: 1
+
+###

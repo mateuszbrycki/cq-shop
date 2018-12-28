@@ -1,0 +1,10 @@
+{
+    "namespace": "com.cqshop.warehouse.application.command",
+    "type": "record",
+    "name": "ProductReservationRemovalRequested",
+    "fields": [
+        {"name": "productId", "type": "long"},
+        {"name": "userId", "type": "long"},
+        {"name": "timestamp",  "type": "long"}
+    ]
+}

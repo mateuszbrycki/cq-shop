@@ -32,4 +32,6 @@ public class Reservation {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    private Long userId;
+
 }

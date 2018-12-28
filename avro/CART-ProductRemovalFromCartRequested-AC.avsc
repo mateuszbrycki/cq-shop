@@ -1,0 +1,10 @@
+{
+    "namespace": "com.cqshop.cart.application.command",
+    "type": "record",
+    "name": "ProductRemovalFromCartRequested",
+    "fields": [
+        {"name": "productId",  "type": "long"},
+        {"name": "userId",  "type": "long"},
+        {"name": "timestamp",  "type": "long"}
+    ]
+}

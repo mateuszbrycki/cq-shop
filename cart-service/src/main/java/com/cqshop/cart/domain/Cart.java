@@ -29,7 +29,7 @@ public class Cart {
     @NotNull
     private Date creationDate;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "cart")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "cart", orphanRemoval = true)
     private List<CartLine> cartLines;
 
     public List<CartLine> getCartLines() {
