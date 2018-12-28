@@ -1,0 +1,9 @@
+{
+    "namespace": "com.cqshop.cart.application.command",
+    "type": "record",
+    "name": "RemoveCartLines",
+    "fields": [
+        {"name": "userId",  "type": "long"},
+        {"name": "timestamp",  "type": "long"}
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "namespace": "com.cqshop.warehouse.avro",
+    "type": "record",
+    "name": "ReservationMaterialized",
+    "fields": [
+        {"name": "reservationId", "type": "long"},
+        {"name": "productId", "type": "long"},
+        {"name": "userId", "type": "long"},
+        {"name": "quantity",  "type": "int"},
+        {"name": "materializationDate",  "type": "long"},
+        {"name": "timestamp",  "type": "long"}
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "namespace": "com.cqshop.notification.avro",
+    "type": "record",
+    "name": "OrderConfirmationSent",
+    "fields": [
+        {"name": "userId",  "type": "long"},
+        {"name": "orderId",  "type": "long"},
+        {"name": "timestamp",  "type": "long"}
+    ]
+}

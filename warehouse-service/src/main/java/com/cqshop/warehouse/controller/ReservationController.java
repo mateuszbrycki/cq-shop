@@ -4,7 +4,6 @@ import com.cqshop.cqrs.common.gate.Gate;
 import com.cqshop.warehouse.application.command.ProductReservationRemovalRequested;
 import com.cqshop.warehouse.application.command.ProductReservationRequested;
 import com.cqshop.warehouse.dto.CreateReservation;
-import com.cqshop.warehouse.dto.DeleteReservation;
 import com.netflix.ribbon.proxy.annotation.Http;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

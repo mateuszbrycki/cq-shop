@@ -1,6 +1,7 @@
 package com.cqshop.notification.domain.service;
 
 import com.cqshop.notification.domain.event.ActivationLinkSent;
+import com.cqshop.notification.domain.event.OrderConfirmationSent;
 import com.cqshop.notification.infrastructure.EventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,15 @@ public class MailSenderService {
                 .email(email)
                 .username(username)
                 .build()
+        );
+    }
+
+    public void sendOrderConfirmation(long orderId, long userId) {
+        eventPublisher.publish(
+                OrderConfirmationSent.builder()
+                        .orderId(orderId)
+                        .userId(userId)
+                        .build()
         );
     }
 }

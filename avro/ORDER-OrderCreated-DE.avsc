@@ -1,0 +1,12 @@
+{
+    "namespace": "com.cqshop.order.avro",
+    "type": "record",
+    "name": "OrderCreated",
+    "fields": [
+        {"name": "orderId", "type": "long"},
+        {"name": "creationTime", "type": "long"},
+        {"name": "orderOwner", "type": "long"},
+        {"name": "timestamp",  "type": "long"}
+
+    ]
+}

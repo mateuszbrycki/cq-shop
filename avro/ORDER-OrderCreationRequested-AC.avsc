@@ -1,0 +1,10 @@
+{
+    "namespace": "com.cqshop.order.application.command",
+    "type": "record",
+    "name": "OrderCreationRequested",
+    "fields": [
+        {"name": "userId", "type": "long"},
+        {"name": "timestamp",  "type": "long"}
+
+    ]
+}

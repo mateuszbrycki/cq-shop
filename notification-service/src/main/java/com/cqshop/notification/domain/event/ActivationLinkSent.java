@@ -1,6 +1,6 @@
 package com.cqshop.notification.domain.event;
 
-import com.cqshop.notification.infrastructure.Event;
+import com.cqshop.kafka.event.Event;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
