@@ -1,0 +1,6 @@
+DELETE http://username:password@localhost:8080/cart/product/1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+###

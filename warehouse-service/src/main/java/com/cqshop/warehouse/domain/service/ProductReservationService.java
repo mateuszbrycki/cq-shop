@@ -3,6 +3,7 @@ package com.cqshop.warehouse.domain.service;
 import com.cqshop.warehouse.domain.Product;
 import com.cqshop.warehouse.domain.Reservation;
 import com.cqshop.warehouse.domain.event.ProductReservationCreated;
+import com.cqshop.warehouse.domain.event.ProductReservationRemoved;
 import com.cqshop.warehouse.domain.repository.ProductRepository;
 import com.cqshop.warehouse.domain.repository.ReservationRepository;
 import com.cqshop.warehouse.infrastructure.EventPublisher;
@@ -28,9 +29,31 @@ public class ProductReservationService {
 
     private final EventPublisher eventPublisher;
 
-    public boolean reserve(Long productId, Integer quantity, Long userId) {
+    public boolean remove(Long productId, Long userId) {
 
-        //TODO mbrycki create a reservation
+        List<Reservation> reservations = reservationRepository.findAllByProductProductIdAndUserId(productId, userId);
+
+        if (reservations.isEmpty()) {
+            log.error("Cannot find a reservation for a product {} and a user {}", productId, userId);
+            return false;
+        }
+
+        for (Reservation reservation : reservations) {
+            reservationRepository.delete(reservation);
+            log.info("Removed reservation {} for a product {} and a user {}", reservation.getReservationId(), productId, userId);
+
+            eventPublisher.publish(ProductReservationRemoved.builder()
+                    .userId(userId)
+                    .productId(productId)
+                    .id(reservation.getReservationId())
+                    .build()
+            );
+        }
+
+        return true;
+    }
+
+    public boolean reserve(Long productId, Integer quantity, Long userId) {
 
         Optional<Product> productOptional = productRepository.findById(productId);
 
@@ -51,6 +74,7 @@ public class ProductReservationService {
                 .quantity(quantity)
                 .product(product)
                 .reservationDate(DateTime.now().toDate())
+                .userId(userId)
                 .build();
 
         reservationRepository.save(reservation);

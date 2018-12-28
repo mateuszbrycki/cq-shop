@@ -1,6 +1,7 @@
-GET http://localhost:8084/api/reservation/product/1/quantity/100?userId=2
+POST http://localhost:8084/api/reservation/product
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
+{ "productId" : 1 , "quantity" : 100, "userId" : 2}
 ###

@@ -2,6 +2,7 @@ package com.cqshop.logging.warehouse;
 
 import com.cqshop.warehouse.avro.ProductAddedToWarehouse;
 import com.cqshop.warehouse.avro.ProductReservationCreated;
+import com.cqshop.warehouse.avro.ProductReservationRemoved;
 import com.cqshop.warehouse.avro.ProductUpdatedInWarehouse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.StreamListener;
@@ -27,5 +28,9 @@ public class WarehouseEventsListener {
     @StreamListener(target = WarehouseStreamsConfig.WAREHOUSE_EVENTS, condition = "headers['event-type']=='ProductReservationCreated'")
     public void handleProductReservationCreated(ProductReservationCreated event) {
         log.info("Received ProductReservationCreated event " + event.toString());
+    }
+    @StreamListener(target = WarehouseStreamsConfig.WAREHOUSE_EVENTS, condition = "headers['event-type']=='ProductReservationRemoved'")
+    public void handleProductReservationRemoved(ProductReservationRemoved event) {
+        log.info("Received ProductReservationRemoved event " + event.toString());
     }
 }

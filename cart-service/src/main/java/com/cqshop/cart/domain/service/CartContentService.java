@@ -5,6 +5,7 @@ import com.cqshop.cart.domain.Cart;
 import com.cqshop.cart.domain.CartLine;
 import com.cqshop.cart.domain.event.CartLineUpdated;
 import com.cqshop.cart.domain.event.ProductAddedToCart;
+import com.cqshop.cart.domain.event.ProductRemovedFromCart;
 import com.cqshop.cart.domain.repository.CartRepository;
 import com.cqshop.cart.infrastructure.EventPublisher;
 import com.cqshop.cqrs.common.gate.Gate;
@@ -29,7 +30,24 @@ public class CartContentService {
 
     public Boolean add(long productId, int quantity, long userId) {
 
-        //TODO mbrycki check if product has already been added to the cart
+        Optional<Cart> optionalCart = getUserCart(userId);
+        if (!optionalCart.isPresent()) {
+            log.error("Cannot find a cart for user {}", userId);
+            return false;
+        }
+        Cart cart = optionalCart.get();
+
+        boolean isReserved = reservationService.create(productId, quantity, userId);
+        if (!isReserved) {
+            log.error("Cannot create a product {} in quantity of {}", productId, quantity);
+            return false;
+        }
+
+        addProductToCart(cart, productId, quantity);
+        return true;
+    }
+
+    public Boolean remove(long productId, long userId) {
 
         Optional<Cart> optionalCart = getUserCart(userId);
         if (!optionalCart.isPresent()) {
@@ -38,37 +56,61 @@ public class CartContentService {
         }
         Cart cart = optionalCart.get();
 
-        boolean isReserved = reservationService.reserve(productId, quantity, userId);
-        if (!isReserved) {
-            log.error("Cannot reserve a product {} in quantity of {}", productId, quantity);
+        boolean isReservationReleased = reservationService.remove(productId, userId);
+        if (!isReservationReleased) {
+            log.error("Cannot release the reservation for a product {} in quantity of {}", productId);
             return false;
         }
 
-        updateCart(cart, productId, quantity);
-        return true;
+        return removeProductFromCart(cart, productId);
     }
 
-    private void updateCart(Cart cart, long productId, int quantity) {
+    private boolean removeProductFromCart(Cart cart, long productId) {
+        Optional<CartLine> cartLineToRemove = cart.getCartLines().stream()
+                .filter(line -> line.getProductId().equals(productId))
+                .findFirst();
 
-        if (cart.getCartLines() != null) {
-            for (CartLine cartLine : cart.getCartLines()) {
-                if (cartLine.getProductId().equals(productId)) {
-                    cartLine.setQuantity(cartLine.getQuantity() + quantity);
 
-                    log.info("Updated the cart line ({}) with product {} and quantity {}", cartLine.getCartLineId(), productId, quantity);
-                    cartRepository.save(cart);
+        if (cartLineToRemove.isPresent()) {
+            CartLine line = cartLineToRemove.get();
+            cart.getCartLines().remove(line);
+            cartRepository.save(cart);
 
-                    eventPublisher.publish(CartLineUpdated.builder()
-                            .productId(productId)
-                            .cartLineId(cartLine.getCartLineId())
-                            .quantity(quantity)
-                            .price(cartLine.getPrice())
-                            .build());
+            log.info("Removed the cart line ({}) with product {} ", line.getCartLineId(), productId);
 
-                    return;
-                }
+            eventPublisher.publish(ProductRemovedFromCart.builder()
+                    .productId(productId)
+                    .cartLineId(line.getCartLineId())
+                    .cartId(cart.getCartId())
+                    .build());
+
+            return true;
+        }
+
+        return false;
+
+    }
+
+    private void addProductToCart(Cart cart, long productId, int quantity) {
+
+        for (CartLine cartLine : cart.getCartLines()) {
+            if (cartLine.getProductId().equals(productId)) {
+                cartLine.setQuantity(cartLine.getQuantity() + quantity);
+
+                log.info("Updated the cart line ({}) with product {} and quantity {}", cartLine.getCartLineId(), productId, quantity);
+                cartRepository.save(cart);
+
+                eventPublisher.publish(CartLineUpdated.builder()
+                        .productId(productId)
+                        .cartLineId(cartLine.getCartLineId())
+                        .quantity(quantity)
+                        .price(cartLine.getPrice())
+                        .build());
+
+                return;
             }
         }
+
 
         CartLine cartLine = CartLine.builder()
                 .productId(productId)
