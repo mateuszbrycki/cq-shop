@@ -1,7 +1,6 @@
 package com.cqshop.warehouse.domain;
 
 import lombok.*;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -47,7 +46,7 @@ public class MaterializedReservation {
                 .quantity(reservation.getQuantity())
                 .product(reservation.getProduct())
                 .reservationDate(reservation.getReservationDate())
-                .materializationDate(DateTime.now().toDate())
+                .materializationDate(new Date(System.currentTimeMillis()))
                 .userId(reservation.getUserId())
                 .build();
     }

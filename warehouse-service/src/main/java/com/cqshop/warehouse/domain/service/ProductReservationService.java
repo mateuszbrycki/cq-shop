@@ -9,12 +9,12 @@ import com.cqshop.warehouse.domain.repository.ReservationRepository;
 import com.cqshop.warehouse.infrastructure.EventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 /**
  * Created by Mateusz Brycki on 27/12/2018.
@@ -73,7 +73,7 @@ public class ProductReservationService {
         Reservation reservation = Reservation.builder()
                 .quantity(quantity)
                 .product(product)
-                .reservationDate(DateTime.now().toDate())
+                .reservationDate(new Date(System.currentTimeMillis()))
                 .userId(userId)
                 .build();
 
