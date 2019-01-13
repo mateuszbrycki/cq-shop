@@ -17,6 +17,7 @@ buildscript {
 
 plugins {
 	id 'org.springframework.boot' version '2.0.6.RELEASE'
+	id 'io.franzbecker.gradle-lombok' version '1.14'
 }
 
 apply plugin: 'java'
@@ -27,7 +28,7 @@ apply plugin: "com.commercehub.gradle.plugin.avro"
 
 group = 'com.cqshop'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+sourceCompatibility = 11.0
 
 repositories {
 	mavenCentral()
@@ -78,6 +79,11 @@ dependencies {
 	testCompile('io.projectreactor:reactor-test')
 
 	compile fileTree("../cq-common")
+}
+
+lombok {
+	version = '1.18.4'
+	sha256 = ""
 }
 
 dependencyManagement {
