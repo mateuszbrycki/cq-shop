@@ -1,0 +1,50 @@
+Received UserCartCreated event {"userId": 1, "cartId": 1, "timestamp": 1547287778904}
+Received UserCartCreated event {"userId": 1, "cartId": 1, "timestamp": 1547287778904}
+Received AC CartCreationRequested {"userId": 1, "timestamp": 1547287777971}
+Received AC CartCreationRequested {"userId": 1, "timestamp": 1547287777971}
+Received AC AccountDetailsProvided {"username": "username-2", "password": "password-2", "email": "email-2", "timestamp": 1547287882908}
+Received UserAccountCreated event {"userId": 3, "email": "email-2", "username": "username-2", "timestamp": 1547287883078}
+Received AC CartCreationRequested {"userId": 3, "timestamp": 1547287883357}
+Received UserCartCreated event {"userId": 3, "cartId": 2, "timestamp": 1547287883418}
+Received ActivationLinkSent event {"username": "username-1", "email": "email-1", "timestamp": 1547287892020}
+Received ActivationLinkSent event {"username": "username-2", "email": "email-2", "timestamp": 1547287894379}
+Received AC SendActivationLink {"username": "username-1", "email": "email-1", "timestamp": 1547287892013}
+Received AC SendActivationLink {"username": "username-2", "email": "email-2", "timestamp": 1547287894379}
+Received ProductAddedToWarehouse event {"productId": 2, "code": "product-code-2", "name": "product-name-2", "quantity": 10, "timestamp": 1547287897060}
+Received AC ProductAdditionRequested {"code": "product-code-2", "name": "product-name-2", "description": "product-description", "quantity": 10, "timestamp": 1547287897036}
+Received AC ProductReservationRequested {"productId": 1, "userId": 1, "quantity": 1, "timestamp": 1547287958577}
+Received ProductReservationCreated event {"productId": 1, "userId": 1, "id": 3, "quantity": 1, "timestamp": 1547287959032}
+Received AC ProductReservationRequested {"productId": 1, "userId": 1, "quantity": 1, "timestamp": 1547287983579}
+Received ProductReservationCreated event {"productId": 1, "userId": 1, "id": 4, "quantity": 1, "timestamp": 1547287983626}
+Received AC AddingProductToCartRequested {"productId": 1, "quantity": 1, "userId": 1, "timestamp": 1547287983543}
+Received ProductAddedToCart event {"productId": 1, "cartId": 1, "quantity": 1, "price": 100.0, "timestamp": 1547287983781}
+Received UserAccountActivated event {"userId": 1, "timestamp": 1547288001235}
+Received AC ActivationLinkClicked {"userId": 1, "activationCode": "517903410", "timestamp": 1547288001220}
+Received AC ProductReservationRequested {"productId": 2, "userId": 3, "quantity": 5, "timestamp": 1547288017734}
+Received ProductAddedToCart event {"productId": 2, "cartId": 2, "quantity": 5, "price": 100.0, "timestamp": 1547288017831}
+Received ProductReservationCreated event {"productId": 2, "userId": 3, "id": 5, "quantity": 5, "timestamp": 1547288017780}
+Received AC AddingProductToCartRequested {"productId": 2, "quantity": 5, "userId": 3, "timestamp": 1547288017606}
+Received AC ProductReservationRequested {"productId": 1, "userId": 1, "quantity": 5, "timestamp": 1547288029882}
+Received ProductReservationCreated event {"productId": 1, "userId": 1, "id": 6, "quantity": 5, "timestamp": 1547288029888}
+Received AC AddingProductToCartRequested {"productId": 1, "quantity": 5, "userId": 1, "timestamp": 1547288029851}
+Received CartLineUpdated event {"productId": 1, "cartLineId": 3, "quantity": 5, "price": 100.0, "timestamp": 1547288029915}
+Received AC ProductReservationRemovalRequested {"productId": 2, "userId": 1, "timestamp": 1547288055662}
+Received AC ProductRemovalFromCartRequested {"productId": 2, "userId": 1, "timestamp": 1547288055526}
+Received AC ProductReservationRemovalRequested {"productId": 1, "userId": 1, "timestamp": 1547288064047}
+Received ProductReservationRemoved event {"productId": 1, "userId": 1, "id": 3, "timestamp": 1547288064152}
+Received ProductReservationRemoved event {"productId": 1, "userId": 1, "id": 4, "timestamp": 1547288065011}
+Received ProductReservationRemoved event {"productId": 1, "userId": 1, "id": 6, "timestamp": 1547288065016}
+Received AC ProductRemovalFromCartRequested {"productId": 1, "userId": 1, "timestamp": 1547288064032}
+Received ProductRemovedFromCart event {"productId": 1, "cartId": 1, "cartLineId": 3, "timestamp": 1547288065081}
+Received ProductAddedToCart event {"productId": 1, "cartId": 1, "quantity": 5, "price": 100.0, "timestamp": 1547288070737}
+Received ProductReservationCreated event {"productId": 1, "userId": 1, "id": 7, "quantity": 5, "timestamp": 1547288070723}
+Received AC ProductReservationRequested {"productId": 1, "userId": 1, "quantity": 5, "timestamp": 1547288070711}
+Received AC AddingProductToCartRequested {"productId": 1, "quantity": 5, "userId": 1, "timestamp": 1547288070672}
+Received OrderCreated event {"orderId": 1, "creationTime": 1547288082545, "orderOwner": 1, "timestamp": 1547288083028}
+Received AC OrderCreationRequested {"userId": 1, "timestamp": 1547288081277}
+Received AC RemoveCartLines {"userId": 1, "timestamp": 1547288086184}
+Received AC SendOrderConfirmation {"userId": 1, "orderId": 1, "timestamp": 1547288086189}
+Received CartLineRemoved event {"productId": 1, "cartLineId": 5, "userId": 1, "quantity": 5, "price": 100.0, "timestamp": 1547288086273}
+Received AC MaterializeUserReservations {"userId": 1, "timestamp": 1547288086379}
+Received ReservationMaterialized event {"reservationId": 7, "productId": 1, "userId": 1, "quantity": 5, "materializationDate": 1547288086427, "timestamp": 1547288086462}
+Received OrderConfirmationSent event {"userId": 1, "orderId": 1, "timestamp": 1547288086192}
