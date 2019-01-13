@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.6.RELEASE'
+		springBootVersion = '2.1.2.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -13,11 +13,6 @@ buildscript {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath "com.commercehub.gradle.plugin:gradle-avro-plugin:0.15.1"
     }
-}
-
-plugins {
-	id 'org.springframework.boot' version '2.0.6.RELEASE'
-	id 'io.franzbecker.gradle-lombok' version '1.14'
 }
 
 apply plugin: 'java'
@@ -39,7 +34,7 @@ repositories {
 
 
 ext {
-	springCloudVersion = 'Finchley.RELEASE'
+	set('springCloudVersion', 'Greenwich.RC2')
 }
 
 dependencies {
@@ -71,19 +66,14 @@ dependencies {
 		exclude module: "jcl-over-slf4j"
 	}
 
-
-	compileOnly('org.projectlombok:lombok')
+	annotationProcessor("org.projectlombok:lombok:1.18.4")
+    implementation("org.projectlombok:lombok:1.18.4")
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.cloud:spring-cloud-stream-test-support')
 	testCompile('io.projectreactor:reactor-test')
 
 	compile fileTree("../cq-common")
-}
-
-lombok {
-	version = '1.18.4'
-	sha256 = ""
 }
 
 dependencyManagement {

@@ -5,7 +5,6 @@ import com.cqshop.cart.domain.event.UserCartCreated;
 import com.cqshop.cart.domain.repository.CartRepository;
 import com.cqshop.cart.infrastructure.EventPublisher;
 import lombok.AllArgsConstructor;
-import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,7 +26,7 @@ public class CartCreationService {
 
         Cart cart = Cart.builder()
                 .cartOwner(userId)
-                .creationDate(DateTime.now().toDate())
+                .creationDate(new Date(System.currentTimeMillis()))
                 .build();
 
         cartRepository.save(cart);

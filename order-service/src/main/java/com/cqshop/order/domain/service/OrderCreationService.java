@@ -9,10 +9,10 @@ import com.cqshop.order.dto.Cart;
 import com.cqshop.order.infrastructure.EventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTime;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +41,7 @@ public class OrderCreationService {
         Cart cart = response.getBody();
 
         Order order = Order.builder()
-                .creationDate(DateTime.now().toDate())
+                .creationDate(new Date(System.currentTimeMillis()))
                 .orderOwner(cart.getCartOwner())
                 .build();
 

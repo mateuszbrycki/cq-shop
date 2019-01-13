@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.1.0.M2'
+		springBootVersion = '2.1.2.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -10,11 +10,6 @@ buildscript {
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 	}
-}
-
-plugins {
-	id 'org.springframework.boot' version '2.0.4.RELEASE'
-	id 'io.franzbecker.gradle-lombok' version '1.14'
 }
 
 apply plugin: 'java'
@@ -34,7 +29,7 @@ repositories {
 
 
 ext {
-	springCloudVersion = 'Greenwich.BUILD-SNAPSHOT'
+	set('springCloudVersion', 'Greenwich.RC2')
 }
 
 dependencies {
