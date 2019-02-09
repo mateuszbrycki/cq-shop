@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: traffic-simulator
+
+cqshop.gateway.url: http://localhost:8080
+cqshop.warehouse.url: http://localhost:8084
