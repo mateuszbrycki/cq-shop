@@ -28,16 +28,22 @@ public class MaterializationService {
 
     private final EventPublisher eventPublisher;
 
-    public void materializeReservationsForUser(Long userId) {
+    public boolean materializeReservationsForUser(Long userId) {
 
         List<Reservation> userReservations = reservationRepository.findAllByUserId(userId);
+        if (userReservations.isEmpty()) {
+            log.warn("Not found any reservations for user {}", userId);
+            return false;
+        }
+
         userReservations.forEach(this::materializeReservation);
+        return true;
     }
 
     private void materializeReservation(Reservation reservation) {
         MaterializedReservation materializedReservation = MaterializedReservation.of(reservation);
 
-        materializedReservationRepository.save(materializedReservation);
+        materializedReservation = materializedReservationRepository.save(materializedReservation);
         reservationRepository.delete(reservation);
 
         Product product = reservation.getProduct();
