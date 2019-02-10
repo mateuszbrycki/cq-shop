@@ -4,3 +4,21 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
+zuul:
+  routes:
+    user-management-service:
+      path: /user/**
+      serviceId: user-management-service
+      strip-prefix: false
+    cart-service:
+      path: /cart/**
+      serviceId: cart-service
+      strip-prefix: false
+    order-service:
+      path: /order/**
+      serviceId: order-service
+      strip-prefix: false
+    warehouse-service:
+      path: /product/**
+      serviceId: warehouse-service
+      strip-prefix: false

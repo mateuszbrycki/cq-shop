@@ -7,6 +7,7 @@ import com.cqshop.usermanagement.domain.repository.UserRepository;
 import com.cqshop.usermanagement.infrastructure.EventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -23,6 +24,9 @@ public class AccountUpdateService {
     private final UserRepository userRepository;
     private final EventPublisher eventPublisher;
 
+    private final PasswordEncoder passwordEncoder;
+
+
     public boolean updateAccount(User newUserData) {
 
         Optional<User> user = userRepository.findById(newUserData.getUserId());
@@ -32,7 +36,7 @@ public class AccountUpdateService {
         }
 
         User existingUser = user.get();
-        existingUser.setPassword(newUserData.getPassword());
+        existingUser.setPassword(passwordEncoder.encode(newUserData.getPassword()));
         existingUser.setUsername(newUserData.getUsername());
         userRepository.save(existingUser);
 
