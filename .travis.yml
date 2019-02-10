@@ -4,7 +4,7 @@ jdk:
 install:
   - ./cq-common/gradlew -b cq-common/build.gradle jar
 script:
-  #- ./cart-service/gradlew -b cart-service/build.gradle test
+  - ./cart-service/gradlew -b cart-service/build.gradle test
   #- ./logging-service/gradlew -b logging-service/build.gradle test  
   #- ./notification-service/gradlew -b notification-service/build.gradle test
   #- ./order-service/gradlew -b order-service/build.gradle test

@@ -29,7 +29,7 @@ public class CartCreationService {
                 .creationDate(new Date(System.currentTimeMillis()))
                 .build();
 
-        cartRepository.save(cart);
+        cart = cartRepository.save(cart);
 
         eventPublisher.publish(
                 UserCartCreated.builder()
