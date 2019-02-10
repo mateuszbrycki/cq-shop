@@ -1,0 +1,3 @@
+spring.cloud.stream.schemaRegistryClient.endpoint: http://${CONF_SCHEMA_REGISTRY_HOST:localhost}:${CONF_SCHEMA_REGISTRY_PORT:8990}
+kafka.bootstrap.servers: ${CONF_KAFKA_HOST:localhost}:${CONF_KAFKA_PORT:9092}
+cq-common.application-command-topic: application-command-topic

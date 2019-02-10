@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @Table(name="user_account")
+@EqualsAndHashCode
 public class User {
 
     public enum Status {

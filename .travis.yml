@@ -1,0 +1,12 @@
+language: java
+jdk:
+  - oraclejdk11
+install:
+  - ./user-management-service/gradlew -b user-management-service/build.gradle build
+script:
+  - ./user-management-service/gradlew -b user-management-service/build.gradle test
+branches:
+  only:
+  - master
+notifications:
+  email: true
