@@ -1,6 +1,7 @@
 package com.cqshop.cart.application.handler;
 
 import com.cqshop.cart.application.command.ProductRemovalFromCartRequested;
+import com.cqshop.cart.domain.exception.CartNotFoundException;
 import com.cqshop.cart.domain.service.CartContentService;
 import com.cqshop.cqrs.common.handler.CommandHandler;
 import com.cqshop.cqrs.common.handler.CommandHandlerAnnotation;
@@ -23,9 +24,14 @@ public class ProductRemovalFromCartRequestedHandler implements CommandHandler<Pr
         log.info("Received productRemovalFromCartRequested: " + productRemovalFromCartRequested);
 
 
-        return cartContentService.remove(
-                productRemovalFromCartRequested.getProductId(),
-                productRemovalFromCartRequested.getUserId()
-        );
+        try {
+            return cartContentService.remove(
+                    productRemovalFromCartRequested.getProductId(),
+                    productRemovalFromCartRequested.getUserId()
+            );
+        } catch (CartNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

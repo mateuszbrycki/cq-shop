@@ -1,0 +1,17 @@
+language: java
+jdk:
+  - oraclejdk11
+install:
+  - ./cq-common/gradlew -b cq-common/build.gradle jar
+script:
+  - ./cart-service/gradlew -b cart-service/build.gradle test
+  #- ./logging-service/gradlew -b logging-service/build.gradle test  
+  #- ./notification-service/gradlew -b notification-service/build.gradle test
+  #- ./order-service/gradlew -b order-service/build.gradle test
+  - ./user-management-service/gradlew -b user-management-service/build.gradle test
+  - ./warehouse-service/gradlew -b warehouse-service/build.gradle test
+branches:
+  only:
+  - master
+notifications:
+  email: true

@@ -12,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class ProductAddedToWarehouse extends Event {
 
     private Long id;

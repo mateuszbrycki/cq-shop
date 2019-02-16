@@ -12,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class UserAccountRemoved extends Event {
 
     @NonNull

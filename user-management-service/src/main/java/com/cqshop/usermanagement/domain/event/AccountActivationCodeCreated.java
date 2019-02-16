@@ -12,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class AccountActivationCodeCreated extends Event {
     private Long userId;
     private String activationCode;

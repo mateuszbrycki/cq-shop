@@ -77,7 +77,7 @@ public class ProductReservationService {
                 .userId(userId)
                 .build();
 
-        reservationRepository.save(reservation);
+        reservation = reservationRepository.save(reservation);
 
         eventPublisher.publish(ProductReservationCreated.builder()
                 .id(reservation.getReservationId())

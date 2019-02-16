@@ -4,6 +4,7 @@ import com.cqshop.cqrs.common.handler.CommandHandler;
 import com.cqshop.cqrs.common.handler.CommandHandlerAnnotation;
 import com.cqshop.usermanagement.application.command.UpdateAccountDetailsProvided;
 import com.cqshop.usermanagement.domain.User;
+import com.cqshop.usermanagement.domain.exception.UserNotFoundException;
 import com.cqshop.usermanagement.domain.service.AccountUpdateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,12 @@ public class UpdateAccountDetailsProvidedHandler implements CommandHandler<Updat
                 .password(accountDetailsProvided.getPassword())
                 .build();
 
-        return accountUpdateService.updateAccount(user);
+        try {
+            return accountUpdateService.updateAccount(user);
+        } catch (
+                UserNotFoundException e) {
+            log.error(e.getMessage());
+            return false;
+        }
     }
 }

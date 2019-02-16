@@ -1,9 +1,6 @@
 package com.cqshop.usermanagement.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Getter
 @Entity
+@EqualsAndHashCode
 public class AccountActivationCode {
 
     @Id

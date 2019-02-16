@@ -13,6 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class UserCartCreated extends Event {
 
     @NonNull

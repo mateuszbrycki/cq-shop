@@ -7,6 +7,7 @@ import com.cqshop.cart.domain.event.CartLineRemoved;
 import com.cqshop.cart.domain.event.CartLineUpdated;
 import com.cqshop.cart.domain.event.ProductAddedToCart;
 import com.cqshop.cart.domain.event.ProductRemovedFromCart;
+import com.cqshop.cart.domain.exception.CartNotFoundException;
 import com.cqshop.cart.domain.repository.CartLineRepository;
 import com.cqshop.cart.domain.repository.CartRepository;
 import com.cqshop.cart.infrastructure.EventPublisher;
@@ -15,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Optional;
 
 /**
@@ -32,14 +32,10 @@ public class CartContentService {
     private final ReservationService reservationService;
     private final EventPublisher eventPublisher;
 
-    public Boolean add(long productId, int quantity, long userId) {
+    public Boolean add(long productId, int quantity, long userId) throws CartNotFoundException {
 
-        Optional<Cart> optionalCart = getUserCart(userId);
-        if (!optionalCart.isPresent()) {
-            log.error("Cannot find a cart for user {}", userId);
-            return false;
-        }
-        Cart cart = optionalCart.get();
+        Cart cart = getUserCart(userId)
+                .orElseThrow(() -> new CartNotFoundException("Cannot find cart for user " + userId));
 
         boolean isReserved = reservationService.create(productId, quantity, userId);
         if (!isReserved) {
@@ -51,14 +47,10 @@ public class CartContentService {
         return true;
     }
 
-    public Boolean remove(long productId, long userId) {
+    public Boolean remove(long productId, long userId) throws CartNotFoundException {
 
-        Optional<Cart> optionalCart = getUserCart(userId);
-        if (!optionalCart.isPresent()) {
-            log.error("Cannot find a cart for user {}", userId);
-            return false;
-        }
-        Cart cart = optionalCart.get();
+        Cart cart = getUserCart(userId)
+                .orElseThrow(() -> new CartNotFoundException("Cannot find cart for user " + userId));
 
         boolean isReservationReleased = reservationService.remove(productId, userId);
         if (!isReservationReleased) {
@@ -139,7 +131,7 @@ public class CartContentService {
     private Optional<Cart> getUserCart(long userId) {
         Optional<Cart> cart = cartRepository.findByCartOwner(userId);
 
-        if (!cart.isPresent()) {
+        if (cart.isEmpty()) {
             boolean cartCreationResult = createCartForUser(userId);
 
             if (cartCreationResult) {
@@ -158,15 +150,11 @@ public class CartContentService {
         );
     }
 
-    public Boolean removeCartLines(long userId) {
-        Optional<Cart> cart = cartRepository.findByCartOwner(userId);
+    public Boolean removeCartLines(long userId) throws CartNotFoundException {
+        Cart cart = cartRepository.findByCartOwner(userId)
+                .orElseThrow(() -> new CartNotFoundException("Cannot find cart for user " + userId));
 
-        if (!cart.isPresent()) {
-            log.error("Cannot find a cart for user {}", userId);
-            return false;
-        }
-
-        for (CartLine cartLine : cart.get().getCartLines()) {
+        for (CartLine cartLine : cart.getCartLines()) {
             cartLineRepository.delete(cartLine);
 
             eventPublisher.publish(

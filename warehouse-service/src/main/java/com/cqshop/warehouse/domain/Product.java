@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name="product")
+@EqualsAndHashCode
 public class Product {
 
     @Id

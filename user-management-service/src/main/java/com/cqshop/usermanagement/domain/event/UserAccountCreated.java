@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class UserAccountCreated extends Event {
 
     @NonNull
