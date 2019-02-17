@@ -25,8 +25,8 @@
 #echo "------------------------ STARTING API GATEWAY SERVICE  ---------------------"
 #screen -d -m -S "api-gateway-service" bash -c "cd api-gateway-service; ./startup.sh";
 
-#echo "------------------------ STARTING API GATEWAY SERVICE  ----------------------"
-#screen -d -m -S "api-gateway-service" bash -c "cd api-gateway-service; ./startup.sh";
+echo "------------------------ STARTING API GATEWAY SERVICE  ----------------------"
+screen -d -m -S "api-gateway-service" bash -c "cd api-gateway-service; ./startup.sh";
 
 echo "------------------------ STARTING CART SERVICE  -----------------------------"
 screen -d -m -S "cart-service" bash -c "cd cart-service; ./startup.sh";

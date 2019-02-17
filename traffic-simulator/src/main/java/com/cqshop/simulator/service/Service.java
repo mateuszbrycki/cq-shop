@@ -13,9 +13,9 @@ public abstract class Service {
     protected final RestTemplate template = new RestTemplate();
 
 
-    protected HttpEntity<Object> getAuthRequestObject(int userId, Object request) {
+    protected HttpEntity<Object> getAuthRequestObject(String username, Object request) {
         HttpHeaders headers = new HttpHeaders();
-        headers.setBasicAuth("user-" + userId, "user-" + userId);
+        headers.setBasicAuth(username, username);
         headers.setContentType(MediaType.APPLICATION_JSON);
         return new HttpEntity<>(request, headers);
     }

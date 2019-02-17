@@ -1,0 +1,6 @@
+GET http://username:password@localhost:8080/users
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+###

@@ -14,9 +14,9 @@ public class OrderService extends Service {
     @Value("${cqshop.gateway.url}")
     private  String gatewayUrl;
 
-    public void submitOrder(int userId) {
-        HttpEntity<Object> requestObject = getAuthRequestObject(userId, null);
-        template.exchange(gatewayUrl + "/order", HttpMethod.DELETE,requestObject, Void.class);
+    public void submitOrder(String username) {
+        HttpEntity<Object> requestObject = getAuthRequestObject(username, null);
+        template.exchange(gatewayUrl + "/order", HttpMethod.POST,requestObject, Void.class);
     }
 
 }

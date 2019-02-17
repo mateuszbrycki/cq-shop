@@ -1,8 +1,8 @@
-POST http://localhost:8084/api/product
+POST http://username:password@localhost:8080/product
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{   "name":"product-name-1",   "code":"product-code-1",   "description":"product-description", "quantity":10 }
+{   "name":"product-name-2",   "code":"product-code-2",   "description":"product-description", "quantity":100 }
 
 ###

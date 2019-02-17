@@ -15,7 +15,7 @@ public class CartService extends Service {
     @Value("${cqshop.gateway.url}")
     private String gatewayUrl;
 
-    public void addProductToCart(int userId, int productId, int productAmount) {
+    public void addProductToCart(String username, int productId, int productAmount) {
 
         AddProductToCart request = AddProductToCart.builder()
                 .productId((long)productId)
@@ -24,14 +24,14 @@ public class CartService extends Service {
 
         String url = gatewayUrl + "/cart/product";
 
-        HttpEntity<Object> requestObj = getAuthRequestObject(userId, request);
+        HttpEntity<Object> requestObj = getAuthRequestObject(username, request);
         template.exchange(url, HttpMethod.POST,requestObj, Void.class);
     }
 
-    public void removeProductFromCart(int userId, int productId, int productAmount) {
+    public void removeProductFromCart(String username, int productId, int productAmount) {
         String url = gatewayUrl + "/cart/product/" + productId;
 
-        HttpEntity<Object> requestObj = getAuthRequestObject(userId, null);
+        HttpEntity<Object> requestObj = getAuthRequestObject(username, null);
         template.exchange(url, HttpMethod.DELETE,requestObj, Void.class);
     }
 
