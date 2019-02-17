@@ -19,12 +19,15 @@ The following applications are infrastructure/application services:
 5. Kafka
 6. [traffic-simulator](https://github.com/mateuszbrycki/cq-shop/tree/master/traffic-simulator)
 
-## Technology Stack
+## Technology Stack and Architecture
 All the services are implemented with Java 11 and Spring Framework. Each application is built with Gradle. They use **Config Server** and **Eureka Server**. 
 
 The **api-gateway-service** is an application that runs as a **Zuul Gateway**. It delegates all the calls into proper services. 
 
-## Topics and Streams
+## Current Architecture
+![Current Architecture](https://passion-to-profession.com/wp-content/uploads/2019/02/cq-shop-infrastructure.png)
+
+### Topics and Streams
 All the domain applications publish to Kafka two kinds of messages:
 1. **domain events** - messages that notify about a fact that has happened in the system, e.g. user account created.
 2. **commands/queries** - messages related to CQRS implementation. Those messages are used to pass information within an application/service.
@@ -33,7 +36,7 @@ There are two main types of Kafka Topics:
 1. **service-name-events** - topics for domain events. Domain services are allowed to listening to only those streams.
 2. **application-command-topic** - a topic for command/queries messages
 
-### Messages format
+#### Messages format
 All the messages are transferred as **Avro Messages**. The schema of all events is available in the [avro/](https://github.com/mateuszbrycki/cq-shop/tree/master/avro) directory. Microservices are using **schema-registry-server** to register and receive schema related information.
 
 # TODOs and tech debt
@@ -46,3 +49,8 @@ All the messages are transferred as **Avro Messages**. The schema of all events 
 # Publications
 1. [CQ-Shop - introducing the project](https://passion-to-profession.com/2018/10/10/cq-shop-introducing-the-project/)
 2. [CQ-Shop - Event Storming](https://passion-to-profession.com/2019/02/14/cq-shop-event-storming/)
+
+# Links
+1. [Trello Board](https://trello.com/b/J0patAI6/cq-shop)
+2. [Gathered materials](https://docs.google.com/document/d/1w1Mlskqh1OHX2teFUfPfvlsILXTDhUCY3Kszq8uQ20Q/edit?usp=sharing)
+3. [Drive directory](https://drive.google.com/drive/folders/1M56ePAzZXk89RqTAxO2MoX0-rY3H0NSR?usp=sharing)
