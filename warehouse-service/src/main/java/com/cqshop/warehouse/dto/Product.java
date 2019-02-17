@@ -10,7 +10,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
-@Entity
 @EqualsAndHashCode
 public class Product {
 

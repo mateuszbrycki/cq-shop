@@ -3,5 +3,5 @@ Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{ "productId" : 1, "quantity" : 1}
+{ "productId" : 1, "quantity" : 8}
 ###

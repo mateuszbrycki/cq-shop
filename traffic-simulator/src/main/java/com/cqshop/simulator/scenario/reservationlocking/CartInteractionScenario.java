@@ -6,13 +6,13 @@ import com.cqshop.simulator.service.CartService;
 import com.cqshop.simulator.service.OrderService;
 import com.cqshop.simulator.service.ProductService;
 import com.cqshop.simulator.service.UserService;
+import com.cqshop.simulator.service.dto.Product;
+import com.cqshop.simulator.service.dto.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Mateusz Brycki on 2019-02-09.
@@ -28,9 +28,6 @@ public class CartInteractionScenario extends AbstractScenario {
     private final OrderService orderService;
 
     private final static Random random = new Random();
-    private static Integer actorsAmount = 0;
-    private static Integer productsAmount = 0;
-
     private final Map<Integer, Action> actions = new HashMap<>();
 
     public CartInteractionScenario(UserService userService, ProductService productService, CartService cartService, OrderService orderService) {
@@ -38,17 +35,35 @@ public class CartInteractionScenario extends AbstractScenario {
         this.productService = productService;
         this.cartService = cartService;
         this.orderService = orderService;
-        actions.put(0, this::registerNewUser);
-        actions.put(1, this::addProductToWarehouse);
-        actions.put(2, this::addProductToCart);
-        actions.put(3, this::removeProductFromCart);
-        actions.put(4, this::submitOrder);
+
+        actions.put(0, this::addProductToCart);
+        actions.put(1, this::removeProductFromCart);
+        actions.put(2, this::submitOrder);
+        actions.put(3, this::registerNewUser);
+        actions.put(4, this::addProductToWarehouse);
+
+        registerAdminUser();
+    }
+
+    private void registerAdminUser() {
+
+        for (User user : userService.getAllUsers()) {
+            if (user.getUsername().equals("admin")) {
+                return;
+            }
+        }
+
+        userService.registerUser("admin");
     }
 
     @PostConstruct
     public void run() {
         while(true) {
-            next();
+            try {
+                next();
+            } catch (org.springframework.web.client.HttpServerErrorException.GatewayTimeout e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -56,69 +71,100 @@ public class CartInteractionScenario extends AbstractScenario {
     public void next() {
         int action = getAction();
 
+        if(action % 2 == 0) {
+
+            int i = random.nextInt(2);
+            if (i % 2 == 0) {
+                actions.get(0).perform(); //addProductToCart
+            } else {
+                actions.get(1).perform(); //remove product from cart
+            }
+        }
+
+        if (action % 3 == 0) {
+            actions.get(2).perform(); //submit order
+        }
+
+        if (action % 5 == 0) {
+            int i = random.nextInt(2);
+            if (i % 2 == 0) {
+                actions.get(3).perform(); //register new user
+            } else {
+                actions.get(4).perform(); //add product to warehouse
+            }
+        }
+
         Action actionFunction = actions.get(action);
         actionFunction.perform();
     }
 
     private int getAction() {
-        return random.nextInt(actions.size() - 1);
+        return random.nextInt(actions.size());
     }
 
     private void registerNewUser() {
-        int id = actorsAmount++;
+        String id = UUID.randomUUID().toString();
         userService.registerUser("user-" + id);
         log.info("Registered user with id " + id);
     }
 
     private void addProductToWarehouse() {
-        int id = productsAmount++;
+        String id = UUID.randomUUID().toString();
         productService.createProduct("product-" + id);
         log.info("Added product with id " + id);
     }
 
     private void addProductToCart() {
 
-        //TODO mbrycki retrieve list of users and products
-        if (actorsAmount < 1|| productsAmount < 1) {
+        List<User> users = userService.getAllUsers();
+        List<Product> products = productService.getAllProducts();
+
+        if (users.isEmpty() || products.isEmpty()) {
             return;
         }
 
-        int userId = random.nextInt(actorsAmount);
-        int productId = random.nextInt(productsAmount);
+        int userNumber = random.nextInt(users.size());
+        int productId = random.nextInt(products.size());
 
-        int productAmount = random.nextInt(10);
-        if (userId % 5 == 0) {
+        int productAmount = random.nextInt(10) + 1;
+        if (userNumber % 5 == 0) {
             productAmount *=5;
         }
 
-        cartService.addProductToCart(userId, productId, productAmount);
-        log.info("Added product to cart {cart: " + userId + ", product amount: " + productAmount + "}");
+        String username = users.get(userNumber).getUsername();
+        cartService.addProductToCart(username, productId, productAmount);
+        log.info("Added product to cart {cart: " + username + ", product amount: " + productAmount + "}");
     }
 
     private void removeProductFromCart() {
 
-        //TODO mbrycki retrieve list of users and products
-        if (actorsAmount < 1 || productsAmount < 1) {
+        List<User> users = userService.getAllUsers();
+        List<Product> products = productService.getAllProducts();
+
+        if (users.isEmpty() || products.isEmpty()) {
             return;
         }
-        int userId = random.nextInt(actorsAmount);
-        int productId = random.nextInt(productsAmount);
-        int productAmount = random.nextInt(10);
 
-        cartService.removeProductFromCart(userId, productId, productAmount);
-        log.info("Removed product from cart " + userId + " product id: " + productId);
+        int userNumber = random.nextInt(users.size());
+        int productId = random.nextInt(products.size());
+        int productAmount = random.nextInt(10) + 1;
+
+        String username = users.get(userNumber).getUsername();
+        cartService.removeProductFromCart(username, productId, productAmount);
+        log.info("Removed product from cart " + username + " product id: " + productId);
 
     }
 
     private void submitOrder() {
 
-        //TODO mbrycki retrieve list of users
-        if (actorsAmount < 1) {
+        List<User> users = userService.getAllUsers();
+        if (users.isEmpty()) {
             return;
         }
-        int userId = random.nextInt(actorsAmount);
-        orderService.submitOrder(userId);
-        log.info("Submitted order " + userId);
+        int userNumber = random.nextInt(users.size());
+        String username = users.get(userNumber).getUsername();
+        orderService.submitOrder(username);
+        log.info("Submitted order " + username);
     }
 
 }
