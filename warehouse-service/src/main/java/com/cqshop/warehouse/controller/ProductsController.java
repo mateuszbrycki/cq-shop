@@ -1,6 +1,7 @@
 package com.cqshop.warehouse.controller;
 
-import com.cqshop.warehouse.domain.repository.ProductRepository;
+import com.cqshop.cqrs.common.gate.Gate;
+import com.cqshop.warehouse.application.query.FindAllAvailableProducts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,14 +18,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/products")
 public class ProductsController {
 
-    private final ProductRepository productRepository;
+    private final Gate gate;
 
     @GetMapping
     public List<com.cqshop.warehouse.dto.Product> listAllProducts() {
-        return productRepository.findAll()
-                .stream()
-                .filter(product -> product.getQuantity() > 0)
-                .map(com.cqshop.warehouse.dto.Product::of)
-                .collect(Collectors.toList());
+        return gate.dispatch(new FindAllAvailableProducts());
     }
 }

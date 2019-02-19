@@ -1,6 +1,7 @@
 package com.cqshop.cqrs.common.gate;
 
-import com.cqshop.cqrs.common.command.AbstractApplicationCommand;
+import com.cqshop.cqrs.common.command.ApplicationCommand;
+import com.cqshop.cqrs.common.query.ApplicationQuery;
 
 /**
  * Created by Mateusz Brycki on 02/10/2018.
@@ -8,5 +9,6 @@ import com.cqshop.cqrs.common.command.AbstractApplicationCommand;
 public interface Gate {
 
     //TODO mbrycki dispatchAsync
-    <T> T dispatch(AbstractApplicationCommand command);
+    <T> T dispatch(ApplicationCommand command);
+    <T> T dispatch(ApplicationQuery command);
 }

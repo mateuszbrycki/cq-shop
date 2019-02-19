@@ -1,7 +1,7 @@
 package com.cqshop.notification.application.handler;
 
-import com.cqshop.cqrs.common.handler.CommandHandler;
-import com.cqshop.cqrs.common.handler.CommandHandlerAnnotation;
+import com.cqshop.cqrs.common.handler.command.CommandHandler;
+import com.cqshop.cqrs.common.handler.command.CommandHandlerAnnotation;
 import com.cqshop.notification.application.command.SendActivationLink;
 import com.cqshop.notification.domain.service.MailSenderService;
 import lombok.RequiredArgsConstructor;

@@ -10,6 +10,7 @@ import com.cqshop.cart.domain.exception.CartNotFoundException;
 import com.cqshop.cart.domain.repository.CartLineRepository;
 import com.cqshop.cart.domain.repository.CartRepository;
 import com.cqshop.cart.infrastructure.EventPublisher;
+import com.cqshop.cqrs.common.command.ApplicationCommand;
 import com.cqshop.cqrs.common.gate.Gate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,7 +56,7 @@ public class CartContentServiceTest {
     public void shouldThrowCartNotFoundExceptionWhenAddingProductToCart() throws CartNotFoundException {
         //given
         when(cartRepository.findByCartOwner(1l)).thenReturn(Optional.empty());
-        when(gate.dispatch(any())).thenReturn(false);
+        when(gate.dispatch(any(ApplicationCommand.class))).thenReturn(false);
 
         //when
         Boolean result = cartContentService.add(1l, 10, 1l);
@@ -66,7 +67,7 @@ public class CartContentServiceTest {
         //given
         when(cartRepository.findByCartOwner(1l)).thenReturn(Optional.empty(),
                 Optional.of(Cart.builder().cartOwner(1l).cartId(1l).build()));
-        when(gate.dispatch(any())).thenReturn(true);
+        when(gate.dispatch(any(ApplicationCommand.class))).thenReturn(true);
         when(reservationService.create(1l, 10, 1l)).thenReturn(false);
 
         //when
@@ -169,7 +170,7 @@ public class CartContentServiceTest {
     public void shouldThrowCartNotFoundExceptionWhenRemovingProductFromCart() throws CartNotFoundException {
         //given
         when(cartRepository.findByCartOwner(1l)).thenReturn(Optional.empty());
-        when(gate.dispatch(any())).thenReturn(false);
+        when(gate.dispatch(any(ApplicationCommand.class))).thenReturn(false);
 
         //when
         Boolean result = cartContentService.remove(1l, 1l);

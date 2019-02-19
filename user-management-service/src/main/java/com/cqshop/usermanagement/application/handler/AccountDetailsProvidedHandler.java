@@ -1,7 +1,7 @@
 package com.cqshop.usermanagement.application.handler;
 
-import com.cqshop.cqrs.common.handler.CommandHandler;
-import com.cqshop.cqrs.common.handler.CommandHandlerAnnotation;
+import com.cqshop.cqrs.common.handler.command.CommandHandler;
+import com.cqshop.cqrs.common.handler.command.CommandHandlerAnnotation;
 import com.cqshop.usermanagement.application.command.AccountDetailsProvided;
 import com.cqshop.usermanagement.domain.User;
 import com.cqshop.usermanagement.domain.service.UserRegistrationService;
@@ -33,8 +33,6 @@ public class AccountDetailsProvidedHandler implements CommandHandler<AccountDeta
                 .email(email)
                 .build();
 
-        userRegistrationService.registerUser(user);
-
-        return user;
+        return userRegistrationService.registerUser(user);
     }
 }

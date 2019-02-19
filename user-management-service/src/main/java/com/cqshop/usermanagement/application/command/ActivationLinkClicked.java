@@ -1,6 +1,6 @@
 package com.cqshop.usermanagement.application.command;
 
-import com.cqshop.cqrs.common.command.AbstractApplicationCommand;
+import com.cqshop.cqrs.common.command.AbstractApplicationCommandWithTimestamp;
 import com.cqshop.cqrs.common.command.ApplicationCommandAnnotation;
 import lombok.*;
 
@@ -16,7 +16,7 @@ import java.io.Serializable;
 @ToString
 @ApplicationCommandAnnotation
 @Builder
-public class ActivationLinkClicked extends AbstractApplicationCommand implements Serializable {
+public class ActivationLinkClicked extends AbstractApplicationCommandWithTimestamp implements Serializable {
 
     private Long userId;
     private String activationCode;

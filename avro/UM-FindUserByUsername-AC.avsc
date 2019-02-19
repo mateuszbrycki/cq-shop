@@ -1,0 +1,8 @@
+{
+    "namespace": "com.cqshop.usermanagement.application.query",
+    "type": "record",
+    "name": "FindUserByUsername",
+    "fields": [
+        {"name": "username", "type": "string"}
+    ]
+}

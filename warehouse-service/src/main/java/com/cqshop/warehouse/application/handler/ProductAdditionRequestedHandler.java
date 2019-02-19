@@ -1,7 +1,7 @@
 package com.cqshop.warehouse.application.handler;
 
-import com.cqshop.cqrs.common.handler.CommandHandler;
-import com.cqshop.cqrs.common.handler.CommandHandlerAnnotation;
+import com.cqshop.cqrs.common.handler.command.CommandHandler;
+import com.cqshop.cqrs.common.handler.command.CommandHandlerAnnotation;
 import com.cqshop.warehouse.application.command.ProductAdditionRequested;
 import com.cqshop.warehouse.domain.Product;
 import com.cqshop.warehouse.domain.service.ProductAddingService;

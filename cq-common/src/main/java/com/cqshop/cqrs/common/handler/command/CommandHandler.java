@@ -1,4 +1,4 @@
-package com.cqshop.cqrs.common.handler;
+package com.cqshop.cqrs.common.handler.command;
 
 import com.cqshop.cqrs.common.command.ApplicationCommand;
 

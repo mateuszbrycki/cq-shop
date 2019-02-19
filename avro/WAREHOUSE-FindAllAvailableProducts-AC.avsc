@@ -1,0 +1,7 @@
+{
+    "namespace": "com.cqshop.warehouse.application.query",
+    "type": "record",
+    "name": "FindAllAvailableProducts",
+    "fields": [
+    ]
+}

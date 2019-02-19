@@ -1,0 +1,8 @@
+{
+    "namespace": "com.cqshop.cart.application.query",
+    "type": "record",
+    "name": "FindUserCart",
+    "fields": [
+        {"name": "userId",  "type": "long"}
+    ]
+}

@@ -1,7 +1,7 @@
 package com.cqshop.usermanagement.application.handler;
 
-import com.cqshop.cqrs.common.handler.CommandHandler;
-import com.cqshop.cqrs.common.handler.CommandHandlerAnnotation;
+import com.cqshop.cqrs.common.handler.command.CommandHandler;
+import com.cqshop.cqrs.common.handler.command.CommandHandlerAnnotation;
 import com.cqshop.usermanagement.application.command.ActivationLinkClicked;
 import com.cqshop.usermanagement.domain.exception.AccountActivationCodeNotFound;
 import com.cqshop.usermanagement.domain.exception.UserNotFoundException;

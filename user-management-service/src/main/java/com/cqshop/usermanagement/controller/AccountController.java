@@ -4,8 +4,9 @@ import com.cqshop.cqrs.common.gate.Gate;
 import com.cqshop.usermanagement.application.command.AccountDetailsProvided;
 import com.cqshop.usermanagement.application.command.AccountRemovalRequested;
 import com.cqshop.usermanagement.application.command.UpdateAccountDetailsProvided;
+import com.cqshop.usermanagement.application.query.FindUserByUsername;
 import com.cqshop.usermanagement.domain.User;
-import com.cqshop.usermanagement.domain.repository.UserRepository;
+import com.cqshop.usermanagement.domain.exception.UserNotFoundException;
 import com.cqshop.usermanagement.dto.RegisterAccount;
 import com.cqshop.usermanagement.dto.UpdateAccount;
 import com.cqshop.usermanagement.dto.UserAuthResponse;
@@ -13,10 +14,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * Created by Mateusz Brycki on 01/10/2018.
@@ -27,7 +28,6 @@ import java.util.Arrays;
 @RequestMapping("/api/user")
 public class AccountController {
 
-    private final UserRepository userRepository;
     private final Gate gate;
 
     @PostMapping
@@ -83,15 +83,16 @@ public class AccountController {
 
 
     @GetMapping
-    public ResponseEntity<UserAuthResponse> findUser(@RequestParam(value = "username") String username) {
+    public ResponseEntity<UserAuthResponse> findUser(@RequestParam(value = "username") String username) throws UserNotFoundException {
 
         if (username == null || username.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
-        log.error("Got " + username + " username");
+        log.info("Got " + username + " username");
 
-        User user = userRepository.findByUsername(username);
+        User user = ((Optional<User>)gate.dispatch(new FindUserByUsername(username)))
+                .orElseThrow(() -> new UserNotFoundException("Cannot find user for " + username));
 
         UserAuthResponse response = UserAuthResponse.builder()
                 //TODO mbrycki password should be stored as encrypted

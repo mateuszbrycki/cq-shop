@@ -1,0 +1,7 @@
+{
+    "namespace": "com.cqshop.usermanagement.application.query",
+    "type": "record",
+    "name": "ListAllNotArchivedUsers",
+    "fields": [
+    ]
+}

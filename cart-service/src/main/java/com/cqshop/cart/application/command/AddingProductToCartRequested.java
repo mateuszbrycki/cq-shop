@@ -1,6 +1,6 @@
 package com.cqshop.cart.application.command;
 
-import com.cqshop.cqrs.common.command.AbstractApplicationCommand;
+import com.cqshop.cqrs.common.command.AbstractApplicationCommandWithTimestamp;
 import com.cqshop.cqrs.common.command.ApplicationCommandAnnotation;
 import lombok.*;
 
@@ -16,7 +16,7 @@ import java.io.Serializable;
 @ToString
 @ApplicationCommandAnnotation
 @Builder
-public class AddingProductToCartRequested extends AbstractApplicationCommand implements Serializable {
+public class AddingProductToCartRequested extends AbstractApplicationCommandWithTimestamp implements Serializable {
 
     @NonNull
     private long productId;

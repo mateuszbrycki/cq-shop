@@ -1,6 +1,6 @@
 package com.cqshop.order.application.command;
 
-import com.cqshop.cqrs.common.command.AbstractApplicationCommand;
+import com.cqshop.cqrs.common.command.AbstractApplicationCommandWithTimestamp;
 import com.cqshop.cqrs.common.command.ApplicationCommandAnnotation;
 import lombok.*;
 
@@ -16,7 +16,7 @@ import java.io.Serializable;
 @ToString
 @ApplicationCommandAnnotation
 @Builder
-public class OrderCreationRequested extends AbstractApplicationCommand implements Serializable {
+public class OrderCreationRequested extends AbstractApplicationCommandWithTimestamp implements Serializable {
     @NonNull
     private Long userId;
 

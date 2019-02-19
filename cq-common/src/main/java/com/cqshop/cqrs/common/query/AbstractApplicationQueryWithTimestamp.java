@@ -1,16 +1,15 @@
-package com.cqshop.cqrs.common.command;
+package com.cqshop.cqrs.common.query;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 /**
  * Created by Mateusz Brycki on 02/10/2018.
  */
-public abstract class AbstractApplicationCommand implements ApplicationCommand {
+public abstract class AbstractApplicationQueryWithTimestamp implements ApplicationQuery {
 
     private final long timestamp;
 
-    public AbstractApplicationCommand() {
+    public AbstractApplicationQueryWithTimestamp() {
         this.timestamp = Instant.now().toEpochMilli();
     }
 

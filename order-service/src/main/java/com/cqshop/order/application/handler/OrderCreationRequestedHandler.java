@@ -1,7 +1,8 @@
 package com.cqshop.order.application.handler;
 
-import com.cqshop.cqrs.common.handler.CommandHandler;
-import com.cqshop.cqrs.common.handler.CommandHandlerAnnotation;
+
+import com.cqshop.cqrs.common.handler.command.CommandHandler;
+import com.cqshop.cqrs.common.handler.command.CommandHandlerAnnotation;
 import com.cqshop.order.application.command.OrderCreationRequested;
 import com.cqshop.order.domain.service.OrderCreationService;
 import lombok.RequiredArgsConstructor;

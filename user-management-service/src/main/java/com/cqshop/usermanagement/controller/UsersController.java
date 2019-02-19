@@ -1,5 +1,7 @@
 package com.cqshop.usermanagement.controller;
 
+import com.cqshop.cqrs.common.gate.Gate;
+import com.cqshop.usermanagement.application.query.ListAllNotArchivedUsers;
 import com.cqshop.usermanagement.domain.repository.UserRepository;
 import com.cqshop.usermanagement.dto.User;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +22,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/users")
 public class UsersController {
 
-    private final UserRepository userRepository;
+    private final Gate gate;
 
     @GetMapping
     public List<User> listUsers() {
-        return userRepository.findAll()
-                .stream()
-                .filter(user -> !user.getStatus().equals(com.cqshop.usermanagement.domain.User.Status.ARCHIVED))
-                .map(User::of)
-                .collect(Collectors.toList());
+        return gate.dispatch(new ListAllNotArchivedUsers());
     }
 }
