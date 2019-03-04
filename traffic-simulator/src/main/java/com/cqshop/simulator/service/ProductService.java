@@ -28,6 +28,7 @@ public class ProductService extends Service {
                 .description(productName)
                 .name(productName)
                 .quantity(new Random().nextInt(200) & Integer.MAX_VALUE)
+                .price(new Random().nextInt(100) & Integer.MAX_VALUE)
                 .build();
 
         HttpEntity<Object> requestObj = getAuthRequestObject("admin", request);

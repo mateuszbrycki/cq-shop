@@ -18,6 +18,7 @@ public class Product {
     private String code;
     private String description;
     private Integer quantity;
+    private Double price;
 
     public static Product of(com.cqshop.warehouse.domain.Product product) {
 
@@ -27,6 +28,7 @@ public class Product {
                 .code(product.getCode())
                 .description(product.getDescription())
                 .quantity(product.getQuantity())
+                .price(product.getPrice())
                 .build();
     }
 }

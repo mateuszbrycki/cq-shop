@@ -9,6 +9,8 @@ import com.cqshop.cart.domain.event.ProductRemovedFromCart;
 import com.cqshop.cart.domain.exception.CartNotFoundException;
 import com.cqshop.cart.domain.repository.CartLineRepository;
 import com.cqshop.cart.domain.repository.CartRepository;
+import com.cqshop.cart.domain.repository.WarehouseRepository;
+import com.cqshop.cart.dto.Product;
 import com.cqshop.cart.infrastructure.EventPublisher;
 import com.cqshop.cqrs.common.gate.Gate;
 import org.junit.Test;
@@ -16,6 +18,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +51,9 @@ public class CartContentServiceTest {
 
     @Mock
     private EventPublisher eventPublisher;
+
+    @Mock
+    private WarehouseRepository warehouseRepository;
 
     @InjectMocks
     private CartContentService cartContentService;
@@ -83,6 +90,7 @@ public class CartContentServiceTest {
 
         when(cartRepository.findByCartOwner(1l)).thenReturn(Optional.of(cart));
         when(reservationService.create(1l, 10, 1l)).thenReturn(true);
+        when(warehouseRepository.findProduct(1l)).thenReturn(new ResponseEntity<Product>(Product.builder().price(100.).build(), HttpStatus.OK));
 
         //when
         Boolean result = cartContentService.add(1l, 10, 1l);
@@ -93,13 +101,14 @@ public class CartContentServiceTest {
         assertEquals(1, cart.getCartLines().size());
         assertEquals(1l, (long)cart.getCartLines().get(0).getProductId());
         assertEquals(10, (long)cart.getCartLines().get(0).getQuantity());
+        assertEquals(1000., cart.getCartLines().get(0).getPrice(), 0.);
 
         verify(cartRepository).save(cart);
         verify(eventPublisher).publish(ProductAddedToCart.builder()
                 .productId(1l)
                 .cartId(cart.getCartId())
                 .quantity(10)
-                .price(100.)
+                .price(1000.)
                 .build());
     }
 
@@ -112,7 +121,7 @@ public class CartContentServiceTest {
 
         when(cartRepository.findByCartOwner(1l)).thenReturn(Optional.of(cart));
         when(reservationService.create(1l, 10, 1l)).thenReturn(true);
-
+        when(warehouseRepository.findProduct(1l)).thenReturn(new ResponseEntity<Product>(Product.builder().price(100.).build(), HttpStatus.OK));
 
         //when
         Boolean result = cartContentService.add(1l, 10, 1l);
@@ -123,13 +132,15 @@ public class CartContentServiceTest {
         assertEquals(1, cart.getCartLines().size());
         assertEquals(1l, (long)cart.getCartLines().get(0).getProductId());
         assertEquals(20, (long)cart.getCartLines().get(0).getQuantity());
+        assertEquals(100., cart.getCartLines().get(0).getPrice(), 0.);
+
 
         verify(cartRepository).save(cart);
         verify(eventPublisher).publish(CartLineUpdated.builder()
                 .productId(1l)
                 .cartLineId(1l)
                 .quantity(10)
-                .price(100.)
+                .price(1100.)
                 .build());
     }
 
@@ -143,6 +154,7 @@ public class CartContentServiceTest {
 
         when(cartRepository.findByCartOwner(1l)).thenReturn(Optional.of(cart));
         when(reservationService.create(1l, 10, 1l)).thenReturn(true);
+        when(warehouseRepository.findProduct(1l)).thenReturn(new ResponseEntity<Product>(Product.builder().price(100.).build(), HttpStatus.OK));
 
 
         //when
@@ -154,13 +166,14 @@ public class CartContentServiceTest {
         assertEquals(2, cart.getCartLines().size());
         assertEquals(1l, (long)cart.getCartLines().get(0).getProductId());
         assertEquals(20, (long)cart.getCartLines().get(0).getQuantity());
+        assertEquals(100., cart.getCartLines().get(0).getPrice(), 0.);
 
         verify(cartRepository).save(cart);
         verify(eventPublisher).publish(CartLineUpdated.builder()
                 .productId(1l)
                 .cartLineId(1l)
                 .quantity(10)
-                .price(100.)
+                .price(1100.)
                 .build());
     }
 

@@ -5,12 +5,27 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * Created by Mateusz Brycki on 25/12/2018.
  */
 @Slf4j
 @Component
 public class CartEventsListener {
+
+    private BufferedWriter writer;
+
+    public CartEventsListener() throws IOException {
+        prepareProductAddedToCartLogger();
+    }
+
+    private void prepareProductAddedToCartLogger() throws IOException {
+        writer = new BufferedWriter(new FileWriter("../logs/ProductAddedToCart.csv", true));
+        writer.write("cart-id, product-id, price, quantity, timestamp, class\n");
+    }
 
     @StreamListener(target = CartStreamsConfig.CART_EVENTS, condition = "headers['event-type']=='UserCartCreated'")
     public void handleUserCartCreated(UserCartCreated event) {
@@ -29,6 +44,28 @@ public class CartEventsListener {
 
     @StreamListener(target = CartStreamsConfig.CART_EVENTS, condition = "headers['event-type']=='ProductAddedToCart'")
     public void handleProductAddedToCart(ProductAddedToCart event) {
+        StringBuilder builder = new StringBuilder()
+                .append(event.getCartId())
+                .append(",")
+                .append(event.getProductId())
+                .append(",")
+                .append(event.getPrice())
+                .append(",")
+                .append(event.getQuantity())
+                .append(",")
+                .append(event.getTimestamp())
+                .append(",")
+                .append(event.getQuantity() > 10 ? "1" : "0")
+                .append("\n");
+                    //class
+
+        try {
+            writer.write(builder.toString());
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         log.info("Received ProductAddedToCart event " + event.toString());
     }
 

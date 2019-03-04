@@ -28,6 +28,7 @@ public class AddProductController {
                         .code(addProduct.getCode())
                         .description(addProduct.getDescription())
                         .quantity(addProduct.getQuantity())
+                        .price(addProduct.getPrice())
                         .build()
         );
 

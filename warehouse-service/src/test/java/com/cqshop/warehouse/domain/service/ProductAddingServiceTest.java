@@ -64,6 +64,7 @@ public class ProductAddingServiceTest {
                 .code("product-CODE")
                 .description("description")
                 .name("name")
+                .price(99.)
                 .build();
 
         when(productRepository.findByCode("product-CODE")).thenReturn(Product.builder()
@@ -72,6 +73,7 @@ public class ProductAddingServiceTest {
                 .description("description-1")
                 .name("name-1")
                 .quantity(100)
+                .price(80.0)
                 .build());
 
         //when
@@ -79,12 +81,14 @@ public class ProductAddingServiceTest {
 
         //then
         assertEquals(110, (int)newProduct.getQuantity());
+        assertEquals(80.0, newProduct.getPrice(), 0);
 
         verify(eventPublisher).publish(ProductUpdatedInWarehouse.builder()
                 .code(newProduct.getCode())
                 .name(newProduct.getName())
                 .id(newProduct.getProductId())
                 .quantity(newProduct.getQuantity())
+                .price(newProduct.getPrice())
                 .build());
     }
 

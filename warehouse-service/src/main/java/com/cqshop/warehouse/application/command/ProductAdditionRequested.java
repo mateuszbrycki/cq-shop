@@ -31,4 +31,7 @@ public class ProductAdditionRequested extends AbstractApplicationCommand impleme
     @NotNull
     private Integer quantity;
 
+    @NotNull
+    private Double price;
+
 }

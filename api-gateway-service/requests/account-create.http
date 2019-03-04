@@ -3,6 +3,6 @@ Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{   "username":"username1",   "password":"password1",   "email":"email1" }
+{   "username":"username",   "password":"password",   "email":"email" }
 
 ###
