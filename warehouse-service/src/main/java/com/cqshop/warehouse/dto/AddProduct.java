@@ -16,4 +16,5 @@ public class AddProduct {
     private String code;
     private String description;
     private Integer quantity;
+    private Double price;
 }

@@ -17,4 +17,5 @@ public class AddProductToWarehouse {
     private String code;
     private String description;
     private int quantity;
+    private double price;
 }

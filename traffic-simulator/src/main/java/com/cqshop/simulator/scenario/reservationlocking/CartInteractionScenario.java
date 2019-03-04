@@ -59,12 +59,22 @@ public class CartInteractionScenario extends AbstractScenario {
 
     private void registerAdminUser() {
 
-        for (User user : userService.getAllUsers()) {
-            if (user.getUsername().equals("admin")) {
-                return;
+        try {
+
+            for (User user : userService.getAllUsers()) {
+                if (user.getUsername().equals("admin")) {
+                    return;
+                }
             }
+        } catch(org.springframework.web.client.HttpClientErrorException.Unauthorized e) {
+            e.printStackTrace();
         }
 
-        userService.registerUser("admin");
+        try {
+            userService.registerUser("admin");
+        } catch (org.springframework.web.client.HttpServerErrorException.GatewayTimeout e) {
+            e.printStackTrace();
+        }
+
     }
 }

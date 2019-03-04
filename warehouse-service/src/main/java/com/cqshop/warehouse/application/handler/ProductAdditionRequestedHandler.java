@@ -26,6 +26,7 @@ public class ProductAdditionRequestedHandler implements CommandHandler<ProductAd
                 .code(productAdditionRequested.getCode())
                 .description(productAdditionRequested.getDescription())
                 .name(productAdditionRequested.getName())
+                .price(productAdditionRequested.getPrice())
                 .build();
 
         productAddingService.addProduct(product, productAdditionRequested.getQuantity());

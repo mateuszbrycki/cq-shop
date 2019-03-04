@@ -7,7 +7,7 @@
         {"name": "name", "type": "string"},
         {"name": "description", "type": "string"},
         {"name": "quantity",  "type": "int"},
-        {"name": "timestamp",  "type": "long"}
-
+        {"name": "timestamp",  "type": "long"},
+        {"name": "price",  "type": "double"}
     ]
 }

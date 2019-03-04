@@ -19,18 +19,18 @@ public class ProductAddingService {
     private final ProductRepository productRepository;
     private final EventPublisher eventPublisher;
 
-    public Product addProduct(Product product, int quantity) {
+    public Product addProduct(Product newProduct, int quantity) {
 
-        Product existingProduct = productRepository.findByCode(product.getCode());
+        Product existingProduct = productRepository.findByCode(newProduct.getCode());
 
         if (existingProduct != null) {
             updateProduct(existingProduct, quantity);
 
             return existingProduct;
         } else {
-            saveNewProduct(product, quantity);
+            saveNewProduct(newProduct, quantity);
 
-            return product;
+            return newProduct;
         }
     }
 
@@ -43,19 +43,21 @@ public class ProductAddingService {
                 .name(product.getName())
                 .id(product.getProductId())
                 .quantity(product.getQuantity())
+                .price(product.getPrice())
                 .build());
     }
 
-    private void updateProduct(Product product, int quantity) {
-        quantity += product.getQuantity();
-        product.setQuantity(quantity);
-        productRepository.save(product);
+    private void updateProduct(Product existingProduct, int quantity) {
+        quantity += existingProduct.getQuantity();
+        existingProduct.setQuantity(quantity);
+        productRepository.save(existingProduct);
 
         eventPublisher.publish(ProductUpdatedInWarehouse.builder()
-                .code(product.getCode())
-                .name(product.getName())
-                .id(product.getProductId())
-                .quantity(product.getQuantity())
+                .code(existingProduct.getCode())
+                .name(existingProduct.getName())
+                .id(existingProduct.getProductId())
+                .quantity(existingProduct.getQuantity())
+                .price(existingProduct.getPrice())
                 .build());
 
     }

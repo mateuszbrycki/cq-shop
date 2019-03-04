@@ -10,6 +10,7 @@ import com.cqshop.cart.domain.event.ProductRemovedFromCart;
 import com.cqshop.cart.domain.exception.CartNotFoundException;
 import com.cqshop.cart.domain.repository.CartLineRepository;
 import com.cqshop.cart.domain.repository.CartRepository;
+import com.cqshop.cart.domain.repository.WarehouseRepository;
 import com.cqshop.cart.infrastructure.EventPublisher;
 import com.cqshop.cqrs.common.gate.Gate;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class CartContentService {
     private final CartRepository cartRepository;
     private final CartLineRepository cartLineRepository;
     private final ReservationService reservationService;
+    private final WarehouseRepository warehouseRepository;
     private final EventPublisher eventPublisher;
 
     public Boolean add(long productId, int quantity, long userId) throws CartNotFoundException {
@@ -89,6 +91,8 @@ public class CartContentService {
 
     private void addProductToCart(Cart cart, long productId, int quantity) {
 
+        double price = getProductPrice(productId, quantity);
+
         for (CartLine cartLine : cart.getCartLines()) {
             if (cartLine.getProductId().equals(productId)) {
                 cartLine.setQuantity(cartLine.getQuantity() + quantity);
@@ -100,7 +104,7 @@ public class CartContentService {
                         .productId(productId)
                         .cartLineId(cartLine.getCartLineId())
                         .quantity(quantity)
-                        .price(cartLine.getPrice())
+                        .price(cartLine.getPrice() + price)
                         .build());
 
                 return;
@@ -111,7 +115,7 @@ public class CartContentService {
         CartLine cartLine = CartLine.builder()
                 .productId(productId)
                 .quantity(quantity)
-                .price(100.) //TODO mbrycki retrieve product's price
+                .price(price)
                 .cart(cart)
                 .build();
 
@@ -126,6 +130,15 @@ public class CartContentService {
                 .quantity(quantity)
                 .price(cartLine.getPrice())
                 .build());
+    }
+
+    private double getProductPrice(long productId, int quantity) {
+        double price = warehouseRepository.findProduct(productId).getBody().getPrice();
+        if (price == 0.) {
+            log.error("Got 0 price for {}", productId);
+        }
+
+        return price * quantity;
     }
 
     private Optional<Cart> getUserCart(long userId) {
