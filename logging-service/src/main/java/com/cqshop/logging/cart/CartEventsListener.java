@@ -24,7 +24,7 @@ public class CartEventsListener {
 
     private void prepareProductAddedToCartLogger() throws IOException {
         writer = new BufferedWriter(new FileWriter("../logs/ProductAddedToCart.csv", true));
-        writer.write("cart-id, product-id, price, quantity, timestamp, class\n");
+        writer.write("cart-id, product-id, price, quantity, class\n");
     }
 
     @StreamListener(target = CartStreamsConfig.CART_EVENTS, condition = "headers['event-type']=='UserCartCreated'")
@@ -44,7 +44,7 @@ public class CartEventsListener {
 
     @StreamListener(target = CartStreamsConfig.CART_EVENTS, condition = "headers['event-type']=='ProductAddedToCart'")
     public void handleProductAddedToCart(ProductAddedToCart event) {
-        StringBuilder builder = new StringBuilder()
+/*        StringBuilder builder = new StringBuilder()
                 .append(event.getCartId())
                 .append(",")
                 .append(event.getProductId())
@@ -56,6 +56,18 @@ public class CartEventsListener {
                 .append(event.getTimestamp())
                 .append(",")
                 .append(event.getQuantity() > 10 ? "1" : "0")
+                .append("\n");*/
+
+        StringBuilder builder = new StringBuilder()
+                .append(event.getCartId())
+                .append(",")
+                .append(event.getProductId())
+                .append(",")
+                .append(event.getPrice())
+                .append(",")
+                .append(event.getQuantity())
+                .append(",")
+                .append(event.getQuantity() > 50 && (event.getPrice()/event.getQuantity()) < 1 ? "1" : "0")
                 .append("\n");
                     //class
 

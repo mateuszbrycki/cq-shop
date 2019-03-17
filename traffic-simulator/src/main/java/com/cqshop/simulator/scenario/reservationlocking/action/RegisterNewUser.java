@@ -4,6 +4,7 @@ import com.cqshop.simulator.scenario.Action;
 import com.cqshop.simulator.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -11,6 +12,7 @@ import java.util.UUID;
 /**
  * Created by Mateusz Brycki on 2019-02-17.
  */
+@Profile("cartInteractionScenario")
 @Slf4j
 @AllArgsConstructor
 @Component

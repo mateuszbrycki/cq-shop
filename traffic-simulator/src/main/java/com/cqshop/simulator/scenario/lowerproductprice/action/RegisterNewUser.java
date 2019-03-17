@@ -1,7 +1,7 @@
-package com.cqshop.simulator.scenario.reservationlocking.action;
+package com.cqshop.simulator.scenario.lowerproductprice.action;
 
 import com.cqshop.simulator.scenario.Action;
-import com.cqshop.simulator.service.ProductService;
+import com.cqshop.simulator.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -12,18 +12,18 @@ import java.util.UUID;
 /**
  * Created by Mateusz Brycki on 2019-02-17.
  */
-@Profile("cartInteractionScenario")
+@Profile("lowerProductPriceScenario")
 @Slf4j
 @AllArgsConstructor
 @Component
-public class AddProductToWarehouse implements Action {
+public class RegisterNewUser implements Action {
 
-    private final ProductService productService;
+    private final UserService userService;
 
     @Override
     public void perform() {
         String id = UUID.randomUUID().toString();
-        productService.createProduct("product-" + id);
-        log.info("Added product with id " + id);
+        userService.registerUser("user-" + id);
+        log.info("Registered user with id " + id);
     }
 }

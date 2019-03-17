@@ -15,10 +15,10 @@ public class CartService extends Service {
     @Value("${cqshop.gateway.url}")
     private String gatewayUrl;
 
-    public void addProductToCart(String username, int productId, int productAmount) {
+    public void addProductToCart(String username, long productId, int productAmount) {
 
         AddProductToCart request = AddProductToCart.builder()
-                .productId((long)productId)
+                .productId(productId)
                 .quantity(productAmount)
                 .build();
 

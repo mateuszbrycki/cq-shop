@@ -6,6 +6,7 @@ import com.cqshop.simulator.service.UserService;
 import com.cqshop.simulator.service.dto.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Random;
 /**
  * Created by Mateusz Brycki on 2019-02-17.
  */
+@Profile("cartInteractionScenario")
 @Slf4j
 @AllArgsConstructor
 @Component
