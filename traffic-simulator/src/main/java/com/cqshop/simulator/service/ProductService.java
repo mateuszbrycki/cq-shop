@@ -27,12 +27,29 @@ public class ProductService extends Service {
                 .code(productName)
                 .description(productName)
                 .name(productName)
-                .quantity(new Random().nextInt(200) & Integer.MAX_VALUE)
-                .price(new Random().nextInt(100) & Integer.MAX_VALUE)
+                .quantity(new Random().nextInt(2000) & Integer.MAX_VALUE)
+                .price((Math.random() * ((100 - 50) + 1)) + 50)
                 .build();
 
+        performRequest(request);
+    }
+
+    public void createProduct(String productName, double price) {
+
+        AddProductToWarehouse request = AddProductToWarehouse.builder()
+                .code(productName)
+                .description(productName)
+                .name(productName)
+                .quantity(new Random().nextInt(2000) & Integer.MAX_VALUE)
+                .price(price)
+                .build();
+
+        performRequest(request);
+    }
+
+    private void performRequest(AddProductToWarehouse request) {
         HttpEntity<Object> requestObj = getAuthRequestObject("admin", request);
-        template.exchange(gatewayUrl + "product/", HttpMethod.POST,requestObj, Void.class);
+        template.exchange(gatewayUrl + "product/", HttpMethod.POST, requestObj, Void.class);
     }
 
 
