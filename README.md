@@ -1,7 +1,7 @@
 # CQ Shop
 [![Build Status](https://travis-ci.org/mateuszbrycki/cq-shop.svg?branch=master)](https://travis-ci.org/mateuszbrycki/cq-shop)
 ## Intro
-An e-commerce system written in a microservice architecture. Communication between applications is implemented mainly with events that are processed by Kafka.
+An e-commerce system written in a microservice architecture. Communication between applications is implemented mainly with events that are processed by Kafka
 
 The following applications are domain services:
 1. [cart-service](https://github.com/mateuszbrycki/cq-shop/tree/master/cart-service)
