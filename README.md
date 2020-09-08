@@ -49,6 +49,9 @@ All the messages are transferred as **Avro Messages**. The schema of all events 
 # Publications
 1. [CQ-Shop - introducing the project](https://passion-to-profession.com/2018/10/10/cq-shop-introducing-the-project/)
 2. [CQ-Shop - Event Storming](https://passion-to-profession.com/2019/02/14/cq-shop-event-storming/)
+3. [CQ-Shop – Events and Anomaly Detection](https://passion-to-profession.com/2019/08/27/cq-shop-events-and-anomaly-detection/)
+4. [CQ-Shop – Architecture, Environment, and Tools](https://passion-to-profession.com/2019/09/05/cq-shop-architecture-environment-and-tools/)
+5. [CQ-Shop – Summary](https://passion-to-profession.com/2019/09/16/cq-shop-summary/)
 
 # Links
 1. [Trello Board](https://trello.com/b/J0patAI6/cq-shop)
