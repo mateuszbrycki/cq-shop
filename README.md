@@ -25,19 +25,19 @@ All the services are implemented with Java 11 and Spring Framework. Each applica
 The **api-gateway-service** is an application that runs as a **Zuul Gateway**. It delegates all the calls into proper services. 
 
 ## Current Architecture
-![Current Architecture](https://passion-to-profession.com/wp-content/uploads/2019/02/cq-shop-infrastructure.png)
+![Current Architecture](https://github.com/mateuszbrycki/diary/blob/master/blog/img/cq-shop-architecture.png)
 
 ### Topics and Streams
 All the domain applications publish to Kafka two kinds of messages:
-1. **domain events** - messages that notify about a fact that has happened in the system, e.g. user account created.
+1. **domain events** - messages that notify about a fact that has happened in the system, e.g., a user account created.
 2. **commands/queries** - messages related to CQRS implementation. Those messages are used to pass information within an application/service.
 
 There are two main types of Kafka Topics:
-1. **service-name-events** - topics for domain events. Domain services are allowed to listening to only those streams.
+1. **service-name-events** - topics for domain events. Domain services are allowed to listen to only those streams.
 2. **application-command-topic** - a topic for command/queries messages
 
 #### Messages format
-All the messages are transferred as **Avro Messages**. The schema of all events is available in the [avro/](https://github.com/mateuszbrycki/cq-shop/tree/master/avro) directory. Microservices are using **schema-registry-server** to register and receive schema related information.
+All the messages are transferred as **Avro Messages**. The schema of all events is available in the [avro/](https://github.com/mateuszbrycki/cq-shop/tree/master/avro) directory. Microservices are using **schema-registry-server** to register and receive schema-related information.
 
 # TODOs and tech debt
 1. Cover services with unit tests.
@@ -47,13 +47,8 @@ All the messages are transferred as **Avro Messages**. The schema of all events 
 5. Implement Event Sourcing for restoring applications' state.
 
 # Publications
-1. [CQ-Shop - introducing the project](https://passion-to-profession.com/2018/10/10/cq-shop-introducing-the-project/)
-2. [CQ-Shop - Event Storming](https://passion-to-profession.com/2019/02/14/cq-shop-event-storming/)
-3. [CQ-Shop – Events and Anomaly Detection](https://passion-to-profession.com/2019/08/27/cq-shop-events-and-anomaly-detection/)
-4. [CQ-Shop – Architecture, Environment, and Tools](https://passion-to-profession.com/2019/09/05/cq-shop-architecture-environment-and-tools/)
-5. [CQ-Shop – Summary](https://passion-to-profession.com/2019/09/16/cq-shop-summary/)
-
-# Links
-1. [Trello Board](https://trello.com/b/J0patAI6/cq-shop)
-2. [Gathered materials](https://docs.google.com/document/d/1w1Mlskqh1OHX2teFUfPfvlsILXTDhUCY3Kszq8uQ20Q/edit?usp=sharing)
-3. [Drive directory](https://drive.google.com/drive/folders/1M56ePAzZXk89RqTAxO2MoX0-rY3H0NSR?usp=sharing)
+1. [CQ-Shop - introducing the project](https://github.com/mateuszbrycki/diary/blob/master/blog/20181010-cq-shop-introducing-the-project.md)
+2. [CQ-Shop - Event Storming](https://github.com/mateuszbrycki/diary/blob/master/blog/20190214-cq-shop-event-storming.md)
+3. [CQ-Shop – Events and Anomaly Detection](https://github.com/mateuszbrycki/diary/blob/master/blog/20190827-cq-shop%E2%80%93events-anomaly-detection.md)
+4. [CQ-Shop – Architecture, Environment, and Tools](https://github.com/mateuszbrycki/diary/blob/master/blog/20190905-cq-shop-architecture-environment-and-tools.md)
+5. [CQ-Shop – Summary](https://github.com/mateuszbrycki/diary/blob/master/blog/20190916-cq-shop-summary.md)
